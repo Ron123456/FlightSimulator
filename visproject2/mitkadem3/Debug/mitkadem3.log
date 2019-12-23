@@ -1,0 +1,13 @@
+﻿  Compiler.cpp
+c:\users\ron\source\repos\mitkadem3\mitkadem3\compiler.cpp(3): error C2084: function 'Compiler::Compiler(void)' already has a body
+  c:\users\ron\source\repos\mitkadem3\mitkadem3\compiler.h(24): note: see previous definition of '{ctor}'
+c:\users\ron\source\repos\mitkadem3\mitkadem3\compiler.cpp(11): warning C4018: '<': signed/unsigned mismatch
+c:\users\ron\source\repos\mitkadem3\mitkadem3\compiler.cpp(26): warning C4018: '<': signed/unsigned mismatch
+  mitkadem3.cpp
+  openServerCommand.cpp
+c:\users\ron\source\repos\mitkadem3\mitkadem3\command.h(7): error C2011: 'Command': 'class' type redefinition
+  c:\users\ron\source\repos\mitkadem3\mitkadem3\command.h(7): note: see declaration of 'Command'
+c:\users\ron\source\repos\mitkadem3\mitkadem3\openservercommand.h(4): error C2504: 'Command': base class undefined
+c:\users\ron\source\repos\mitkadem3\mitkadem3\openservercommand.h(6): error C3668: 'openServerCommand::execute': method with override specifier 'override' did not override any base class methods
+c:\users\ron\source\repos\mitkadem3\mitkadem3\openservercommand.cpp(2): fatal error C1083: Cannot open include file: 'sys/socket.h': No such file or directory
+  Generating Code...
