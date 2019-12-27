@@ -22,6 +22,6 @@ class Compiler {
 public:
 	void read(fstream& f);
 	Compiler() {};
-	
+	SymbolTable getSymbolTable() { return this->sym; };
 };
 #endif

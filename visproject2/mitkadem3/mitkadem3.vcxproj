@@ -160,6 +160,7 @@
     <ClInclude Include="Compiler.h" />
     <ClInclude Include="openServerCommand.h" />
     <ClInclude Include="SymbolTable.h" />
+    <ClInclude Include="Var.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
