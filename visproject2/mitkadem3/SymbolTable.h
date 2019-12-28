@@ -1,3 +1,5 @@
+#ifndef FLIGHTSIMULATOR_SYMBOLTABLE_H
+#define FLIGHTSIMULATOR_SYMBOLTABLE_H
 #include <queue> 
 #include "Var.h"
 #include <unordered_map>
@@ -17,3 +19,4 @@ public:
 	float get(string varname);
 	bool containsPath(string path);
 };
+#endif

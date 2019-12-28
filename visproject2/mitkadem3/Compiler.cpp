@@ -1,8 +1,9 @@
 #include "Compiler.h"
 #include <algorithm>
-Compiler:: Compiler() {
-	//add names to command map
-}
+#include "openServerCommand.h"
+/*Compiler::Compiler() {
+	//add names to command maps
+}*/
 //the main method of compiler
 void Compiler::read(fstream& f) {
 
@@ -12,6 +13,8 @@ void Compiler::read(fstream& f) {
 		cout << tokens[i] << ",";
 	}
 	cout << endl;
+	openServerCommand* cd = new openServerCommand();
+	cd->execute(*this,"");
 	//run the actual program
 	this->parser(tokens);
 	std::cout << "compiler finshed" << endl;
@@ -76,7 +79,9 @@ vector<string> Compiler::lexer(fstream& f) {
 			line = line.substr(line.find(' '));
 			//handle =< => == < > and such. insert the { and }
 			//delete spaces
-			line.erase(remove_if(line.begin(), line.end(), isspace), line.end());
+			//line.erase(std::remove_if(line.begin(), line.end(), ::isspace), line.end());
+			std::string::iterator end_pos = std::remove(line.begin(), line.end(), ' ');
+			line.erase(end_pos, line.end());
 			//IT MATTERS which operator to check first
 			vector<string> operands{ "==","<=",">=","<",">","!=" };
 			conditionLexer(line,tokens,operands);
@@ -206,7 +211,9 @@ vector<string> Compiler::lexer(fstream& f) {
 				//<- type we can assume code is correct
 				else {
 					//remove spaces
-					line.erase(remove_if(line.begin(), line.end(), isspace), line.end());
+				//	line.erase(remove_if(line.begin(), line.end(), isspace), line.end());
+					std::string::iterator end_pos = std::remove(line.begin(), line.end(), ' ');
+					line.erase(end_pos, line.end());
 					//push var name
 					tokens.push_back(line.substr(0, line.find("<-")));
 					tokens.push_back("<-");
@@ -224,7 +231,9 @@ vector<string> Compiler::lexer(fstream& f) {
 			//else, it's a var value assgiment fd= 4
 			else if(line.find('=') != string::npos){
 				//remove spaces
-				line.erase(remove_if(line.begin(), line.end(), isspace), line.end());
+				//line.erase(remove_if(line.begin(), line.end(), isspace), line.end());
+				std::string::iterator end_pos = std::remove(line.begin(), line.end(), ' ');
+				line.erase(end_pos, line.end());
 				//get the 'varname' part
 				string temp = line.substr(0,line.find('='));
 				tokens.push_back(temp.substr(0,temp.find(' ')));

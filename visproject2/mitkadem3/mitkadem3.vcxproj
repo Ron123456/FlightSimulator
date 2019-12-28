@@ -18,6 +18,24 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D:\Desktop\linuxfiles\university\mitkadem\ex3\Command.h" />
+    <ClInclude Include="D:\Desktop\linuxfiles\university\mitkadem\ex3\Compiler.h" />
+    <ClInclude Include="D:\Desktop\linuxfiles\university\mitkadem\ex3\ConnectCommand.h" />
+    <ClInclude Include="D:\Desktop\linuxfiles\university\mitkadem\ex3\openServerCommand.h" />
+    <ClInclude Include="D:\Desktop\linuxfiles\university\mitkadem\ex3\SymbolTable.h" />
+    <ClInclude Include="D:\Desktop\linuxfiles\university\mitkadem\ex3\Var.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="D:\Desktop\linuxfiles\university\mitkadem\ex3\Compiler.cpp" />
+    <ClCompile Include="D:\Desktop\linuxfiles\university\mitkadem\ex3\ConnectCommand.cpp" />
+    <ClCompile Include="D:\Desktop\linuxfiles\university\mitkadem\ex3\mitkadem3.cpp" />
+    <ClCompile Include="D:\Desktop\linuxfiles\university\mitkadem\ex3\openServerCommand.cpp" />
+    <ClCompile Include="D:\Desktop\linuxfiles\university\mitkadem\ex3\SymbolTable.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="D:\Desktop\linuxfiles\university\mitkadem\ex3\fl.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{F702DE3F-C05A-4993-8E34-7C1721CBCE69}</ProjectGuid>
@@ -150,18 +168,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Compiler.cpp" />
-    <ClCompile Include="mitkadem3.cpp" />
-    <ClCompile Include="openServerCommand.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Command.h" />
-    <ClInclude Include="Compiler.h" />
-    <ClInclude Include="openServerCommand.h" />
-    <ClInclude Include="SymbolTable.h" />
-    <ClInclude Include="Var.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
