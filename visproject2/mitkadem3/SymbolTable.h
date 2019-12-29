@@ -13,10 +13,11 @@ class SymbolTable {
 //queue of things to execute
 	queue <string> asd;
 public:
+	//connc =1 means ->, and <- is 0
 	void createVar(string name, string path, bool connc);
 	void setValueFromName(string name,float val);
 	void setValueFromPath(string path,float val);
 	float get(string varname);
-	bool containsPath(string path);
+	bool containsPathToUpdate(string path);
 };
 #endif

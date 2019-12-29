@@ -7,14 +7,20 @@ void SymbolTable::createVar(string name, string path, bool connc) {
 	this->paths.insert({ path,v });
 }
 void SymbolTable::setValueFromName(string name, float val) {
-	this->var_names[name].setVal(val);
+	this->var_names.find(name)->second.setVal(val);
+	//this line requires the default constructor which we don't have5
+	//this->var_names[name].setVal(val);
 }
 void SymbolTable::setValueFromPath(string path, float val) {
-	this->paths[path].setVal(val);
+	this->paths.find(path)->second.setVal(val);
+	//this line below requires the default constructor which we don't have5
+	//this->paths[path].setVal(val);
 }
 float SymbolTable::get(string varname) {
-	return this->var_names[varname].getVal();
+	return this->var_names.find(varname)->second.getVal();
+	//this line below requires the default constructor which we don't have5
+	//return this->var_names[varname].getVal();
 }
-bool SymbolTable::containsPath(string path) {
-	return this->paths.find(path) != this->paths.end();
+bool SymbolTable::containsPathToUpdate(string path) {
+	return this->paths.find(path) != this->paths.end() && this->paths.find(path)->second.getConnc();
 }

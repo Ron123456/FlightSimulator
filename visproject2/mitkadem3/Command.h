@@ -10,8 +10,8 @@ class Command {
 
 public:
 	//the args that execute gets depends on you- I need compiler as arg
-	virtual int execute(Compiler cp,std::string s);
-	//virtual ~Command() = 0;
+	virtual int execute(Compiler* cp, std::string s) { (void)(cp); (void)(s); return 1; };
+	virtual ~Command() {};
 };
 #endif
 

@@ -9,12 +9,12 @@ void Compiler::read(fstream& f) {
 
 	vector<string> tokens = lexer(f);
 	cout << "lexer finished" << endl;
-	for (int i = 0; i < tokens.size(); i++) {
+	for (int i = 0; (unsigned int)i < tokens.size(); i++) {
 		cout << tokens[i] << ",";
 	}
 	cout << endl;
 	openServerCommand* cd = new openServerCommand();
-	cd->execute(*this,"");
+	cd->execute(this,"");
 	//run the actual program
 	this->parser(tokens);
 	std::cout << "compiler finshed" << endl;
@@ -23,10 +23,13 @@ void Compiler::read(fstream& f) {
 string newsubstr(string s, size_t start_index, size_t end_index) {
 	return s.substr(start_index, end_index - start_index + 1);
 }
-
+void Compiler::parser(vector<string> tokens) {
+	//to have no notes on g++
+	tokens = tokens;
+}
 void conditionLexer(string line, vector<string> &tokens, vector<string> operands) {
 	//check for each operator if it exists
-	for (int i = 0; i < operands.size(); i++) {
+	for (int i = 0; (unsigned int)i < operands.size(); i++) {
 		//if the operand exists,
 		if (line.find(operands[i]) != string::npos) {
 			//push the var name
@@ -41,7 +44,7 @@ void conditionLexer(string line, vector<string> &tokens, vector<string> operands
 			break;
 		}
 	}
-	cout << "no legal op FOUND\n";
+	//cout << "no legal op FOUND "<<line<<endl;
 }
 
 bool isCommandWithArgs(string s) {
@@ -57,10 +60,14 @@ vector<string> Compiler::lexer(fstream& f) {
 	string line;
 	// Declaring Vector of String type 
 	vector<string> tokens;
+	int lineno = 0;
 	while (!f.eof()) {
 		std::getline(f, line);
-		//erase tabs first of all
-		line.erase(remove(line.begin(), line.end(), '\t'),line.end());
+		lineno++;
+		//erase ALL tabs first of all
+		line.erase(remove(line.begin(), line.end(), '\t'), line.end());
+		//remove front spaces
+		line=line.substr(line.find_first_not_of(" "), string::npos);
 		//dont erase spaces in print command
 		if (line.rfind("Print", 0) == 0 ) {
 			tokens.push_back("Print");
@@ -248,10 +255,34 @@ vector<string> Compiler::lexer(fstream& f) {
 			else if(line.compare("}")==0){
 				tokens.push_back(line);
 			}
-			//functions
+			//functions- takeoff(var x){
 			else {
+			cout << "got to functions" << endl;
+		//	tokens.push_back(line);
+			//remove spaces
+			//std::string::iterator end_pos = std::remove(line.begin(), line.end(), ' ');
+			//line.erase(end_pos, line.end());
+			//push the 'takeoff'
+				if (line.find('(') != string::npos) {
+					tokens.push_back(line.substr(0, line.find('(')));
+					tokens.push_back("(");
+					//cut the line- 'var x){'
+					line = line.substr(line.find("(") + 1, string::npos);
+					//check if definition or usage
+					if (line.find("var") != string::npos) {
+						tokens.push_back("var");
 
-			
+						line = line.substr(line.find("var") + 4, string::npos);
+						//line= x){
+						tokens.push_back(line.substr(0, line.find(")")));
+						tokens.push_back(")");
+						tokens.push_back("{");
+					}
+					else {
+						tokens.push_back(line.substr(0, line.find(")")));
+						tokens.push_back(")");
+					}
+				}
 			}
 		}
 	}

@@ -8,7 +8,7 @@ using namespace std;
 int main(int argc, char* argv[]){
 	fstream input_file;
 	if (argc < 2) {
-		std::cout << "please provide file name!";
+		std::cout << "please provide file name!\n";
 		exit(0);
 	}
 	//open file

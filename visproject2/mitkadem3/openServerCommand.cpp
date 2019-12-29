@@ -1,14 +1,19 @@
 #include "openServerCommand.h"
+
+#include <stdio.h>
+//linux libraries
 #include <sys/socket.h>
 #include <netinet/in.h> 
-//maybe not needed
-#include <stdio.h>
 #include <unistd.h> 
 #include <stdlib.h> 
 #include <thread>
+//#include <winsock2.h>
 static string listofvars[] = { "/instrumentation/airspeed-indicator/indicated-speed-kt","/sim/time/warp","/controls/switches/magnetos","//instrumentation/heading-indicator/offset-deg","/instrumentation/altimeter/indicated-altitude-ft","/instrumentation/altimeter/pressure-alt-ft","/instrumentation/attitude-indicator/indicated-pitch-deg","/instrumentation/attitude-indicator/indicated-roll-deg","/instrumentation/attitude-indicator/internal-pitch-deg","/instrumentation/attitude-indicator/internal-roll-deg","/instrumentation/encoder/indicated-altitude-ft","/instrumentation/encoder/pressure-alt-ft","/instrumentation/gps/indicated-altitude-ft","/instrumentation/gps/indicated-ground-speed-kt","/instrumentation/gps/indicated-vertical-speed","/instrumentation/heading-indicator/indicated-heading-deg","/instrumentation/magnetic-compass/indicated-heading-deg","/instrumentation/slip-skid-ball/indicated-slip-skid","/instrumentation/turn-indicator/indicated-turn-rate","/instrumentation/vertical-speed-indicator/indicated-speed-fpm","/controls/flight/aileron","/controls/flight/elevator","/controls/flight/rudder","/controls/flight/flaps","/controls/engines/engine/throttle","/controls/engines/current-engine/throttle","/controls/switches/master-avionics","/controls/switches/starter","/engines/active-engine/auto-start","/controls/flight/speedbrake","/sim/model/c172p/brake-parking","/controls/engines/engine/primer","/controls/engines/current-engine/mixture","/controls/switches/master-bat","/controls/switches/master-alt","/engines/engine/rpm" };
-void openServerCommand::openConnection(Compiler cp, string s) {
+void openServerCommand::openConnection(Compiler* cp, string s) {
 	//get port somehow- depends on parser
+	//int port = atoi(s);?
+	//to surpass g++ notes
+	(void)(s);
 	int port=5400;
 	int sockid = socket(AF_INET, SOCK_STREAM, 0);
 	if (sockid == -1) {
@@ -24,27 +29,36 @@ void openServerCommand::openConnection(Compiler cp, string s) {
 	if (bind(sockid, (struct sockaddr *) &address, sizeof(address)) == -1) {
 		exit(1);
 	}
-
+	/*if (bind(sockid, (SOCKADDR *) &address, sizeof(address)) == SOCKET_ERROR) {
+		exit(1);
+	}*/
 	if (listen(sockid, 5) == -1) {
 		cout << "listening open server failed" << endl;
 		exit(1);
 	}
+	cout << "OpenServerCommand-trying to accept:" << endl;
+	//this is the flight simulator socket
+	int client_socket = accept(sockid, (struct sockaddr *) &address, (socklen_t*)&addrlen);
+	//int client_socket = accept(sockid, (struct sockaddr *) &address, (socklen_t*)&addrlen);
+	if (client_socket == -1) {
+		cout << "client_socket open server failed" << endl;
+		exit(1);
+	}
+	cout << "made connection" << endl;
 	while (true) {
-		//this is the flight simulator socket
-		int client_socket = accept(sockid, (struct sockaddr *) &address, (socklen_t*)&addrlen);
-		if (client_socket == -1) {
-			cout << "client_socket open server failed" << endl;
-			exit(1);
-		}
 		//notify main that we can continue the running
 		if (!this->openedConn) {
 			this->openedConn = true;
 		}
+		
 		//if()
 		//parse the data- we get float,float,float and need to put in the sys table, base on the XML data
 		char buffer[2048];
 		int valread = read(client_socket, buffer, 2048);
+		//to have no notes  on g++
+		valread = valread;
 		string buf(buffer);
+		cout << "buffer: " << buffer << endl;
 		//it is possible to get more than 1 list of vars so we seperate by \n
 		while (buf.find("\n") != string::npos) {
 			string msg = buf.substr(buf.find("\n"));
@@ -54,8 +68,8 @@ void openServerCommand::openConnection(Compiler cp, string s) {
 			while (msg.find(",") != string::npos) {
 				cout << "msg is "<<msg << endl;
 				//if we saved a var with that path
-				if (cp.getSymbolTable().containsPath(listofvars[index])) {
-					cp.getSymbolTable().setValueFromPath(listofvars[index], stof(msg.substr(msg.find(","))));
+				if (cp->getSymbolTable().containsPathToUpdate(listofvars[index])) {
+					cp->getSymbolTable().setValueFromPath(listofvars[index], stof(msg.substr(msg.find(","))));
 
 				}
 				//cut the string
@@ -64,8 +78,8 @@ void openServerCommand::openConnection(Compiler cp, string s) {
 			}
 			cout << "msg is " << msg << endl;
 			//in the last float
-			if (cp.getSymbolTable().containsPath(listofvars[index])) {
-				cp.getSymbolTable().setValueFromPath(listofvars[index], stof(msg));
+			if (cp->getSymbolTable().containsPathToUpdate(listofvars[index])) {
+				cp->getSymbolTable().setValueFromPath(listofvars[index], stof(msg));
 			}
 			//cut the string
 			buf= buf.substr(buf.find("\n")+1,string::npos);
@@ -79,8 +93,8 @@ void openServerCommand::openConnection(Compiler cp, string s) {
 		while (msg.find(",") != string::npos) {
 			cout << "msg is " << msg << endl;
 			//if we saved a var with that path
-			if (cp.getSymbolTable().containsPath(listofvars[index])) {
-				cp.getSymbolTable().setValueFromPath(listofvars[index], stof(msg.substr(msg.find(","))));
+			if (cp->getSymbolTable().containsPathToUpdate(listofvars[index])) {
+				cp->getSymbolTable().setValueFromPath(listofvars[index], stof(msg.substr(msg.find(","))));
 
 			}
 			//cut the string
@@ -89,17 +103,18 @@ void openServerCommand::openConnection(Compiler cp, string s) {
 		}
 		cout << "msg is " << msg << endl;
 		//in the last float
-		if (cp.getSymbolTable().containsPath(listofvars[index])) {
-			cp.getSymbolTable().setValueFromPath(listofvars[index], stof(msg));
+		if (cp->getSymbolTable().containsPathToUpdate(listofvars[index])) {
+			cp->getSymbolTable().setValueFromPath(listofvars[index], stof(msg));
 		}
 		//update the sym table of compiler
 	}
+	cout << "finished loop" << endl;
 	//close listening socket
-	//close(sockid);
+	close(sockid);
 }
 
 //creates a server that gets values
-int openServerCommand::execute(Compiler cp,string s) {
+int openServerCommand::execute(Compiler* cp,string s) {
 	//block the main for only the first connection
 	//std::thread thread1(this->openConnection,cp,s);
 	std::thread thread1(&openServerCommand::openConnection,this,cp,s);
