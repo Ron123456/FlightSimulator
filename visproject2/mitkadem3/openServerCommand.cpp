@@ -7,7 +7,9 @@
 #include <unistd.h> 
 #include <stdlib.h> 
 #include <thread>
+#include <chrono>
 //#include <winsock2.h>
+bool isOnlyNewlines(string s);
 static string listofvars[] = { "/instrumentation/airspeed-indicator/indicated-speed-kt","/sim/time/warp","/controls/switches/magnetos","//instrumentation/heading-indicator/offset-deg","/instrumentation/altimeter/indicated-altitude-ft","/instrumentation/altimeter/pressure-alt-ft","/instrumentation/attitude-indicator/indicated-pitch-deg","/instrumentation/attitude-indicator/indicated-roll-deg","/instrumentation/attitude-indicator/internal-pitch-deg","/instrumentation/attitude-indicator/internal-roll-deg","/instrumentation/encoder/indicated-altitude-ft","/instrumentation/encoder/pressure-alt-ft","/instrumentation/gps/indicated-altitude-ft","/instrumentation/gps/indicated-ground-speed-kt","/instrumentation/gps/indicated-vertical-speed","/instrumentation/heading-indicator/indicated-heading-deg","/instrumentation/magnetic-compass/indicated-heading-deg","/instrumentation/slip-skid-ball/indicated-slip-skid","/instrumentation/turn-indicator/indicated-turn-rate","/instrumentation/vertical-speed-indicator/indicated-speed-fpm","/controls/flight/aileron","/controls/flight/elevator","/controls/flight/rudder","/controls/flight/flaps","/controls/engines/engine/throttle","/controls/engines/current-engine/throttle","/controls/switches/master-avionics","/controls/switches/starter","/engines/active-engine/auto-start","/controls/flight/speedbrake","/sim/model/c172p/brake-parking","/controls/engines/engine/primer","/controls/engines/current-engine/mixture","/controls/switches/master-bat","/controls/switches/master-alt","/engines/engine/rpm" };
 void openServerCommand::openConnection(Compiler* cp, string s) {
 	//get port somehow- depends on parser
@@ -50,32 +52,39 @@ void openServerCommand::openConnection(Compiler* cp, string s) {
 		if (!this->openedConn) {
 			this->openedConn = true;
 		}
-		
+		//cout << "got to here" << endl;
 		//if()
 		//parse the data- we get float,float,float and need to put in the sys table, base on the XML data
-		char buffer[2048];
-		int valread = read(client_socket, buffer, 2048);
+		char buffer[1024];
+		int valread = read(client_socket, buffer, 1024);
+		cout << "read data" << endl;
 		//to have no notes  on g++
 		valread = valread;
 		string buf(buffer);
 		cout << "buffer: " << buffer << endl;
 		//it is possible to get more than 1 list of vars so we seperate by \n
-		while (buf.find("\n") != string::npos) {
-			string msg = buf.substr(buf.find("\n"));
+		//buf is usually filled with \n at the end of it
+		while (buf.find("\n") != string::npos && !isOnlyNewlines(buf)) {
+			string msg = buf.substr(0,buf.find("\n"));
 			int index = 0;
-			cout <<"buf is"<< buf << endl;
+			cout <<"buf is "<< buf << endl;
 			//interpet msg to update vals for sym table
 			while (msg.find(",") != string::npos) {
-				cout << "msg is "<<msg << endl;
+				cout << std::to_string(stof(msg.substr(0, msg.find(",")))) << ",";
+				//cout << listofvars[index];
+				//cout << "msg is "<<msg << endl;
 				//if we saved a var with that path
 				if (cp->getSymbolTable().containsPathToUpdate(listofvars[index])) {
-					cp->getSymbolTable().setValueFromPath(listofvars[index], stof(msg.substr(msg.find(","))));
+					//cout << " updated var" << endl;
+					cp->getSymbolTable().setValueFromPath(listofvars[index], stof(msg.substr(0,msg.find(","))));
 
 				}
 				//cut the string
 				msg = msg.substr(msg.find(",")+1, string::npos);
+				cout << flush;
 				index++;
 			}
+			//the last parameter
 			cout << "msg is " << msg << endl;
 			//in the last float
 			if (cp->getSymbolTable().containsPathToUpdate(listofvars[index])) {
@@ -86,15 +95,16 @@ void openServerCommand::openConnection(Compiler* cp, string s) {
 			
 		}
 		//for the last buf
-		int index = 0;
-		cout << "buf is" << buf << endl;
+		/*int index = 0;
+		cout << "bufs is" << buf << endl;
 		string msg = buf;
 		//interpet msg to update vals for sym table
 		while (msg.find(",") != string::npos) {
-			cout << "msg is " << msg << endl;
+			cout << std::to_string(stof(msg.substr(0, msg.find(",")))) << ",";
+			//cout << "msg is " << msg << endl;
 			//if we saved a var with that path
 			if (cp->getSymbolTable().containsPathToUpdate(listofvars[index])) {
-				cp->getSymbolTable().setValueFromPath(listofvars[index], stof(msg.substr(msg.find(","))));
+				cp->getSymbolTable().setValueFromPath(listofvars[index], stof(msg.substr(0,msg.find(","))));
 
 			}
 			//cut the string
@@ -105,7 +115,7 @@ void openServerCommand::openConnection(Compiler* cp, string s) {
 		//in the last float
 		if (cp->getSymbolTable().containsPathToUpdate(listofvars[index])) {
 			cp->getSymbolTable().setValueFromPath(listofvars[index], stof(msg));
-		}
+		}*/
 		//update the sym table of compiler
 	}
 	cout << "finished loop" << endl;
@@ -118,15 +128,34 @@ int openServerCommand::execute(Compiler* cp,string s) {
 	//block the main for only the first connection
 	//std::thread thread1(this->openConnection,cp,s);
 	std::thread thread1(&openServerCommand::openConnection,this,cp,s);
+	// Get starting timepoint 
+	auto start = std::chrono::high_resolution_clock::now();
 	//hold it until connection is made
 	while (!this->openedConn) {
+		//print every 10 secs
+		if (std::chrono::duration_cast<std::chrono::seconds>
+			(std::chrono::high_resolution_clock::now() - start).count()>10) {
+			cout << "holding main thread..." << endl;
+			start = std::chrono::high_resolution_clock::now();
+		}
 
 	}
 	//detach the thread from the current function
+	
 	thread1.detach();
-	openConnection(cp,s);
+	cout << "detached the thread" << endl;
+	//openConnection(cp,s);
 	//change later!
 	return 1;
 
+}
+//check if all of the chars in the string are \n
+bool isOnlyNewlines(string s) {
+	for (int i = 0; (unsigned int)i < s.length(); i++) {
+		if (s[i] != '\n') {
+			return false;
+		}
+	}
+	return true;
 }
 

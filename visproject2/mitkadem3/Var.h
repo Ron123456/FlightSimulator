@@ -8,7 +8,7 @@ class Var {
 	bool updateFromSim;
 public:
 	Var(string loc, bool update) :location(loc), updateFromSim(update) { this->value = 0; };
-	void setVal(float val) { value = val; };
+	void setVal(float val) { this->value = val; };
 	float getVal() { return this->value; };
 	bool getConnc() { return this->updateFromSim; };
 };

@@ -1,6 +1,7 @@
 #include "Compiler.h"
 #include <algorithm>
 #include "openServerCommand.h"
+#include <chrono>
 /*Compiler::Compiler() {
 	//add names to command maps
 }*/
@@ -13,9 +14,39 @@ void Compiler::read(fstream& f) {
 		cout << tokens[i] << ",";
 	}
 	cout << endl;
+	this->sym = SymbolTable();
+	this->sym.createVar("time", "/sim/time/warp", 1);
+	this->sym.createVar("airspeed", "/instrumentation/airspeed-indicator/indicated-speed-kt", 1);
+	auto it = this->sym.paths.begin();
+	for (it = this->sym.paths.begin(); it != this->sym.paths.end(); it++)
+	{
+		std::cout << it->first  // path (key)
+			<< ':'
+			<< std::to_string(it->second->getVal())   // string's value 
+			<< std::endl;
+	}
 	openServerCommand* cd = new openServerCommand();
 	cd->execute(this,"");
+	std::cout << "running program" << endl;
+	// Get starting timepoint 
+	auto start = std::chrono::high_resolution_clock::now();
+	// Get starting timepoint 
+	auto start2 = std::chrono::high_resolution_clock::now();
 	//run the actual program
+	//this is to test that main doesn't stop, we don't have a parser yet
+	while (true) {
+		if (std::chrono::duration_cast<std::chrono::seconds>
+			(std::chrono::high_resolution_clock::now() - start2).count() > 6) {
+			cout << "time is " << std::to_string(this->sym.get("time")) << endl;
+			start2 = std::chrono::high_resolution_clock::now();
+		}
+		//print every 10 secs
+		if (std::chrono::duration_cast<std::chrono::seconds>
+			(std::chrono::high_resolution_clock::now() - start).count() > 10) {
+			std::cout << "running program" << endl;
+			start = std::chrono::high_resolution_clock::now();
+		}
+	}
 	this->parser(tokens);
 	std::cout << "compiler finshed" << endl;
 }
@@ -24,7 +55,7 @@ string newsubstr(string s, size_t start_index, size_t end_index) {
 	return s.substr(start_index, end_index - start_index + 1);
 }
 void Compiler::parser(vector<string> tokens) {
-	//to have no notes on g++
+	//to have no notes on g++ for unused 'tokens'
 	tokens = tokens;
 }
 void conditionLexer(string line, vector<string> &tokens, vector<string> operands) {
@@ -73,10 +104,10 @@ vector<string> Compiler::lexer(fstream& f) {
 			tokens.push_back("Print");
 			line = line.substr(line.find("("));
 			//push (
-			tokens.push_back("(");
+			//tokens.push_back("(");
 			//push inside
 			tokens.push_back(line.substr(1, line.find(")")-1));
-			tokens.push_back(")");
+			//tokens.push_back(")");
 		}
 		//handle if and while
 		else if(line.rfind("while", 0) == 0 || line.rfind("if", 0) == 0){
@@ -103,7 +134,7 @@ vector<string> Compiler::lexer(fstream& f) {
 					//insert the 'Command' to the vector
 					tokens.push_back(line.substr(0,index));
 					//insert (
-					tokens.push_back("(");
+					//tokens.push_back("(");
 					int found = index;
 					//insert all of the arguments- until ...,argN)
 					while (line.find(',',found+1) != string::npos) {
@@ -117,7 +148,7 @@ vector<string> Compiler::lexer(fstream& f) {
 						//push argN
 						tokens.push_back(newsubstr(line,found + 1, line.find(')', found + 1)-1));
 						//push )
-						tokens.push_back(")");
+						//tokens.push_back(")");
 					}
 					else {
 						throw "invalid text! no ')' found";
@@ -189,12 +220,12 @@ vector<string> Compiler::lexer(fstream& f) {
 						line = line.substr(line.find("sim"));
 						//push 'sim('
 						tokens.push_back("sim");
-						tokens.push_back("(");
+					//	tokens.push_back("(");
 						size_t findbrac = line.find('(');
 						//push asd/simulator/....
 						tokens.push_back(newsubstr(line, findbrac + 1, line.find(')', findbrac + 1) - 1));
 						//push )
-						tokens.push_back(")");
+					//	tokens.push_back(")");
 					}
 					//TODO- merge into one option
 					//else, it's var x ->sim(...)
@@ -206,12 +237,12 @@ vector<string> Compiler::lexer(fstream& f) {
 						line = line.substr(line.find("sim"));
 						//push 'sim('
 						tokens.push_back("sim");
-						tokens.push_back("(");
+					//	tokens.push_back("(");
 						size_t findbrac = line.find('(');
 						//push asd/simulator/....
 						tokens.push_back(newsubstr(line, findbrac + 1, line.find(')', findbrac + 1) - 1));
 						//push )
-						tokens.push_back(")");
+						//tokens.push_back(")");
 
 					}
 				}
@@ -227,12 +258,12 @@ vector<string> Compiler::lexer(fstream& f) {
 					line = line.substr(line.find("sim"));
 					//push 'sim('
 					tokens.push_back("sim");
-					tokens.push_back("(");
+					//tokens.push_back("(");
 					size_t findbrac = line.find('(');
 					//push asd/simulator/....
 					tokens.push_back(newsubstr(line, findbrac + 1, line.find(')', findbrac + 1) - 1));
 					//push )
-					tokens.push_back(")");
+					//tokens.push_back(")");
 				}
 			}
 			//else, it's a var value assgiment fd= 4
@@ -265,7 +296,7 @@ vector<string> Compiler::lexer(fstream& f) {
 			//push the 'takeoff'
 				if (line.find('(') != string::npos) {
 					tokens.push_back(line.substr(0, line.find('(')));
-					tokens.push_back("(");
+					//tokens.push_back("(");
 					//cut the line- 'var x){'
 					line = line.substr(line.find("(") + 1, string::npos);
 					//check if definition or usage
@@ -275,12 +306,13 @@ vector<string> Compiler::lexer(fstream& f) {
 						line = line.substr(line.find("var") + 4, string::npos);
 						//line= x){
 						tokens.push_back(line.substr(0, line.find(")")));
-						tokens.push_back(")");
+						//tokens.push_back(")");
 						tokens.push_back("{");
 					}
+					//usage- takeoff(500)
 					else {
 						tokens.push_back(line.substr(0, line.find(")")));
-						tokens.push_back(")");
+						//tokens.push_back(")");
 					}
 				}
 			}
