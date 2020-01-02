@@ -124,9 +124,10 @@ void openServerCommand::openConnection(Compiler* cp, string s) {
 }
 
 //creates a server that gets values
-int openServerCommand::execute(Compiler* cp,string s) {
+int openServerCommand::execute(Compiler* cp) {
 	//block the main for only the first connection
 	//std::thread thread1(this->openConnection,cp,s);
+	string s = cp->token[cp->index];
 	std::thread thread1(&openServerCommand::openConnection,this,cp,s);
 	// Get starting timepoint 
 	auto start = std::chrono::high_resolution_clock::now();

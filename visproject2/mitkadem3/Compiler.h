@@ -18,8 +18,10 @@ class Compiler {
 	unordered_map<string, Command> commands;
 	void parser(vector<string> tokens);
 	//copy constructor of fstream is not allowed so I used by refrence
-	vector<string> lexer(fstream& f);
+	void lexer(fstream& f);
 public:
+    vector<string> token;
+    int index = 0;
 	void read(fstream& f);
 	Compiler() {};
 	SymbolTable getSymbolTable() { return this->sym; };

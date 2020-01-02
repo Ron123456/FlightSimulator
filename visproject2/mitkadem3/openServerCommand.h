@@ -6,7 +6,7 @@
 class openServerCommand : public Command {
 	bool openedConn = false;
 public:
-	int execute(Compiler* cp,string s) override;
+	int execute(Compiler* cp) override;
 	void openConnection(Compiler* cp, string s);
 };
 #endif

@@ -10,7 +10,7 @@
 
 class ConnectCommand : public Command {
 public:
-	int execute(Compiler* cp, string s) override { return 1; };
+	int execute(Compiler* cp) override { return 1; };
 };
 
 

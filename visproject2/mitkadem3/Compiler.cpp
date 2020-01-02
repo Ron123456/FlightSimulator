@@ -8,10 +8,12 @@
 //the main method of compiler
 void Compiler::read(fstream& f) {
 
-	vector<string> tokens = lexer(f);
+	//vector<string> tokens = lexer(f);
+	lexer(f);
+
 	cout << "lexer finished" << endl;
-	for (int i = 0; (unsigned int)i < tokens.size(); i++) {
-		cout << tokens[i] << ",";
+	for (int i = 0; (unsigned int)i < token.size(); i++) {
+		cout << token[i] << ",";
 	}
 	cout << endl;
 	this->sym = SymbolTable();
@@ -26,7 +28,7 @@ void Compiler::read(fstream& f) {
 			<< std::endl;
 	}
 	openServerCommand* cd = new openServerCommand();
-	cd->execute(this,"");
+	cd->execute(this);
 	std::cout << "running program" << endl;
 	// Get starting timepoint 
 	auto start = std::chrono::high_resolution_clock::now();
@@ -47,7 +49,7 @@ void Compiler::read(fstream& f) {
 			start = std::chrono::high_resolution_clock::now();
 		}
 	}
-	this->parser(tokens);
+	this->parser(token);
 	std::cout << "compiler finshed" << endl;
 }
 //a new substr better suited for our needs
@@ -87,7 +89,7 @@ bool isCommandWithArgs(string s) {
 }
 
 //breaks down the stream to tokens. TODO- the code can be refactored & improved, if we have time I'll do
-vector<string> Compiler::lexer(fstream& f) {
+void Compiler::lexer(fstream& f) {
 	string line;
 	// Declaring Vector of String type 
 	vector<string> tokens;
@@ -318,6 +320,6 @@ vector<string> Compiler::lexer(fstream& f) {
 			}
 		}
 	}
-	return tokens;
+	token = tokens;
 }
 
