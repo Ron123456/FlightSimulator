@@ -4,10 +4,11 @@
 
 #ifndef FLIGHTSIMULATOR_DEFINEVARCOMMAND_H
 #define FLIGHTSIMULATOR_DEFINEVARCOMMAND_H
-
-
-class DefineVarCommand {
-
+#include "Command.h"
+#include "Compiler.h"
+#include "ConditionParser.h"
+class DefineVarCommand : public Command{
+	int execute(Compiler* cp) override;
 };
 
 

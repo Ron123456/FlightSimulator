@@ -5,8 +5,10 @@
 #ifndef FLIGHTSIMULATOR_SLEEPCOMMAND_H
 #define FLIGHTSIMULATOR_SLEEPCOMMAND_H
 
-
-class SleepCommand {
+#include "Command.h"
+#include "Compiler.h"
+class SleepCommand : public Command{
+	int execute(Compiler* cp) override;
 
 };
 

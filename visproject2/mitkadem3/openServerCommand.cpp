@@ -48,15 +48,15 @@ void openServerCommand::openConnection(Compiler* cp, string s) {
 	}
 	cout << "made connection" << endl;
 	while (true) {
-		//notify main that we can continue the running
-		if (!this->openedConn) {
-			this->openedConn = true;
-		}
 		//cout << "got to here" << endl;
 		//if()
 		//parse the data- we get float,float,float and need to put in the sys table, base on the XML data
 		char buffer[1024];
 		int valread = read(client_socket, buffer, 1024);
+		//notify main that we can continue the running
+		if (!this->openedConn) {
+			this->openedConn = true;
+		}
 		cout << "read data" << endl;
 		//to have no notes  on g++
 		valread = valread;
@@ -127,7 +127,7 @@ void openServerCommand::openConnection(Compiler* cp, string s) {
 int openServerCommand::execute(Compiler* cp) {
 	//block the main for only the first connection
 	//std::thread thread1(this->openConnection,cp,s);
-	string s = cp->token[cp->index];
+	string s = cp->token[cp->index+1];
 	std::thread thread1(&openServerCommand::openConnection,this,cp,s);
 	// Get starting timepoint 
 	auto start = std::chrono::high_resolution_clock::now();

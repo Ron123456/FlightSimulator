@@ -4,10 +4,10 @@
 
 #ifndef FLIGHTSIMULATOR_PRINTCOMMAND_H
 #define FLIGHTSIMULATOR_PRINTCOMMAND_H
-
-
-class PrintCommand {
-
+#include "Command.h"
+#include "Compiler.h"
+class PrintCommand : public Command {
+	int execute(Compiler* cp) override;
 };
 
 

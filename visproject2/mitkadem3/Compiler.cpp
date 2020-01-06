@@ -17,8 +17,8 @@ void Compiler::read(fstream& f) {
 	}
 	cout << endl;
 	this->sym = SymbolTable();
-	this->sym.createVar("time", "/sim/time/warp", 1);
-	this->sym.createVar("airspeed", "/instrumentation/airspeed-indicator/indicated-speed-kt", 1);
+	this->sym.createUpdateVar("time", "/sim/time/warp", 1);
+	this->sym.createUpdateVar("airspeed", "/instrumentation/airspeed-indicator/indicated-speed-kt", 1);
 	auto it = this->sym.paths.begin();
 	for (it = this->sym.paths.begin(); it != this->sym.paths.end(); it++)
 	{

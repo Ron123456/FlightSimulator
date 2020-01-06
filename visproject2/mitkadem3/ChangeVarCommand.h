@@ -4,10 +4,11 @@
 
 #ifndef FLIGHTSIMULATOR_CHANGEVARCOMMAND_H
 #define FLIGHTSIMULATOR_CHANGEVARCOMMAND_H
-
-
-class ChangeVarCommand {
-
+#include "Command.h"
+#include "Compiler.h"
+#include "ConditionParser.h"
+class ChangeVarCommand : public Command{
+	int execute(Compiler* cp) override;
 };
 
 
