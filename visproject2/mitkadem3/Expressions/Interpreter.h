@@ -11,7 +11,7 @@
 class Interpreter {
   vector<Variable*> variables;
  public:
-  static Expression* interpret(string exp);
+  Expression* interpret(string exp);
   void setVariables(string vars);
 };
 

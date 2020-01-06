@@ -3,3 +3,6 @@
 //
 
 #include "WhileCommand.h"
+int execute(Compiler* cp) {
+
+}

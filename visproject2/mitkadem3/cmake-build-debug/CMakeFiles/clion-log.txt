@@ -1,0 +1,4 @@
+/home/amitnir29/Desktop/JetBrains/clion-2019.2.5/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/amitnir29/Desktop/JetBrains/FlightSimulator/visproject2/mitkadem3
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/amitnir29/Desktop/JetBrains/FlightSimulator/visproject2/mitkadem3/cmake-build-debug

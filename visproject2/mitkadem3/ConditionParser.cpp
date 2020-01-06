@@ -51,13 +51,14 @@ bool ConditionParser::isParenthesis(char c) {
 }
 
 int ConditionParser::execute(Compiler *cp) {
+    Interpreter interpreter;
     // lexer returns While,leftexp,operator,rightexp
     string leftexp = cp->token[cp->index + 1];
     string oper = cp->token[cp->index + 2];
     string rightexp = cp->token[cp->index + 3];
     double left = 0, right = 0;
-    left = Interpreter::interpret(leftexp)->calculate();
-    right = Interpreter::interpret(rightexp)->calculate();
+    left = interpreter.interpret(leftexp)->calculate();
+    right = interpreter.interpret(rightexp)->calculate();
     if (oper == "==") {
         if (left == right) {
             return 1;

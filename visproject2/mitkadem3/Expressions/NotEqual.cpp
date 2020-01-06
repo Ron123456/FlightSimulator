@@ -9,4 +9,4 @@ double NotEqual::calculate() {
     }
     return 0;
 }
-NotEqual::NotEqual(Expression *l, Expression *r) : BinaryOperator(l, r) {
+NotEqual::NotEqual(Expression *l, Expression *r) : BinaryOperator(l, r) {}

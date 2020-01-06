@@ -1,0 +1,14 @@
+//
+// Created by amitnir29 on 06/01/2020.
+//
+
+#ifndef FLIGHTSIMULATOR_DEFINEVARCOMMAND_H
+#define FLIGHTSIMULATOR_DEFINEVARCOMMAND_H
+
+
+class DefineVarCommand {
+
+};
+
+
+#endif //FLIGHTSIMULATOR_DEFINEVARCOMMAND_H

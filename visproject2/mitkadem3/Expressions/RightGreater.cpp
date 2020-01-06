@@ -9,4 +9,4 @@ double RightGreater::calculate() {
     }
     return 0;
 }
-RightGreater::RightGreater(Expression *l, Expression *r) : BinaryOperator(l, r) {
+RightGreater::RightGreater(Expression *l, Expression *r) : BinaryOperator(l, r) {}
