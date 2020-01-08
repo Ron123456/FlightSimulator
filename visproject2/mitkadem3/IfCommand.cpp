@@ -8,6 +8,12 @@
 int IfCommand::execute(Compiler *cp) {
     ConditionParser conditionParser = ConditionParser();
     if (conditionParser.execute(cp)) {
-
+        //skip the condition and the {
+        cp->index = cp->index + 5;
+        while (cp->token[cp->index] != "}") {
+            cp->parser->parsing(cp);
+        }
     }
+    //skip }
+    return 1;
 }

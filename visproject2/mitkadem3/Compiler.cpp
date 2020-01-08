@@ -3,7 +3,7 @@
 #include "openServerCommand.h"
 #include <chrono>
 /*Compiler::Compiler() {
-	//add names to command maps
+	parser1 = new Parser();
 }*/
 //the main method of compiler
 void Compiler::read(fstream& f) {
@@ -56,10 +56,10 @@ void Compiler::read(fstream& f) {
 string newsubstr(string s, size_t start_index, size_t end_index) {
 	return s.substr(start_index, end_index - start_index + 1);
 }
-void Compiler::parser(vector<string> tokens) {
+/*void Compiler::parser(vector<string> tokens) {
 	//to have no notes on g++ for unused 'tokens'
 	tokens = tokens;
-}
+}*/
 void conditionLexer(string line, vector<string> &tokens, vector<string> operands) {
 	//check for each operator if it exists
 	for (int i = 0; (unsigned int)i < operands.size(); i++) {
@@ -321,5 +321,10 @@ void Compiler::lexer(fstream& f) {
 		}
 	}
 	token = tokens;
+}
+
+Compiler::Compiler() {
+    parser = new Parser();
+    parser->createmap();
 }
 

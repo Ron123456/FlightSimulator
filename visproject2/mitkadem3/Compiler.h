@@ -7,6 +7,8 @@
 #include <vector>
 #include "Command.h"
 #include "SymbolTable.h"
+#include "Parser.h"
+
 using namespace std;
 /**
  * Compiler Interface
@@ -16,14 +18,18 @@ class Compiler {
 	SymbolTable sym;
 	//the thing for parser- that's for you amitush
 	unordered_map<string, Command> commands;
-	void parser(vector<string> tokens);
+
+	//void parser(vector<string> tokens);
 	//copy constructor of fstream is not allowed so I used by refrence
 	void lexer(fstream& f);
 public:
+    Parser* parser;
     vector<string> token;
     int index = 0;
 	void read(fstream& f);
-	Compiler() {};
-	SymbolTable getSymbolTable() { return this->sym; };
+
+    Compiler();
+
+    SymbolTable getSymbolTable() { return this->sym; };
 };
 #endif

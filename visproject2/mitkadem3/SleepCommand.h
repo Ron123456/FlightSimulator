@@ -6,7 +6,9 @@
 #define FLIGHTSIMULATOR_SLEEPCOMMAND_H
 
 
-class SleepCommand {
+#include "Command.h"
+
+class SleepCommand : public Command {
 
 };
 

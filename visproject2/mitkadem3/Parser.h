@@ -9,8 +9,9 @@
 #include "Compiler.h"
 
 class Parser {
-    map<string, Command> commands;
+    map<string, Command*> commands;
 public:
+    void createmap();
     void parsing(Compiler* cp);
 };
 

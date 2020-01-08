@@ -6,7 +6,9 @@
 #define FLIGHTSIMULATOR_PRINTCOMMAND_H
 
 
-class PrintCommand {
+#include "Command.h"
+
+class PrintCommand : public Command  {
 
 };
 

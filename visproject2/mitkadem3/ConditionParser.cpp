@@ -5,8 +5,8 @@
 #include "ConditionParser.h"
 
 
-
-string ConditionParser::varsFromExp(string &exp, Compiler* compiler) {
+double ConditionParser::varsFromExp(string &exp, Compiler* compiler) {
+    Interpreter interpreter;
     string var = "";
     string newexp = "";
     for (int i=0; i<exp.length(); i++) {
@@ -16,7 +16,8 @@ string ConditionParser::varsFromExp(string &exp, Compiler* compiler) {
             newexp.append(1, c);
         } else {
             //while that's a variable
-            while ((!(isNumber(c) || isOperator(c) || isParenthesis(c) || c == ' ')) && i < exp.length()) {
+            //while ((!(isNumber(c) || isOperator(c) || isParenthesis(c) || c == ' ')) && i < exp.length()) {
+            while ((!(isOperator(c) || isParenthesis(c) || c == ' ')) && i < exp.length()) {
                 var.append(1,exp.at(i));
                 i++;
                 c = exp.at(i);
@@ -35,7 +36,7 @@ string ConditionParser::varsFromExp(string &exp, Compiler* compiler) {
             var = "";
         }
     }
-    return newexp;
+    return interpreter.interpret(newexp)->calculate();
 }
 
 bool ConditionParser::isNumber(char c) {
@@ -51,14 +52,14 @@ bool ConditionParser::isParenthesis(char c) {
 }
 
 int ConditionParser::execute(Compiler *cp) {
-    Interpreter interpreter;
+    //Interpreter interpreter;
     // lexer returns While,leftexp,operator,rightexp
-    string leftexp = cp->token[cp->index + 1];
+    double leftexp = varsFromExp(cp->token[cp->index + 1], cp);
     string oper = cp->token[cp->index + 2];
-    string rightexp = cp->token[cp->index + 3];
+    double rightexp = varsFromExp(cp->token[cp->index + 3], cp);
     double left = 0, right = 0;
-    left = interpreter.interpret(leftexp)->calculate();
-    right = interpreter.interpret(rightexp)->calculate();
+    //left = interpreter.interpret(leftexp)->calculate();
+    //right = interpreter.interpret(rightexp)->calculate();
     if (oper == "==") {
         if (left == right) {
             return 1;

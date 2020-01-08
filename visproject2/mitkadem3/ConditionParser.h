@@ -15,7 +15,8 @@ class ConditionParser : public Command {
     //Compiler* compiler;
 public:
     vector<Command> commandsList(Compiler* compiler);
-    string varsFromExp(string& exp, Compiler* compiler);
+
+    double varsFromExp(string& exp, Compiler* compiler);
 
     bool isNumber(char c);
     bool isOperator(char c);

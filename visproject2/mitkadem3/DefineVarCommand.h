@@ -6,7 +6,9 @@
 #define FLIGHTSIMULATOR_DEFINEVARCOMMAND_H
 
 
-class DefineVarCommand {
+#include "Command.h"
+
+class DefineVarCommand : public Command {
 
 };
 
