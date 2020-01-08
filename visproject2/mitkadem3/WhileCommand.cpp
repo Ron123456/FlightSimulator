@@ -8,7 +8,20 @@ int execute(Compiler* cp) {
     int whileindex = cp->index;
     //after the {
     int loopindex = cp->index+5;
-    int firstTime = conditionParser.execute(cp);
+    int cond = conditionParser.execute(cp);
+    int endindex;
+    while (cond) {
+        cp->index = loopindex;
+        while (cp->token[cp->index] != "}") {
+            cp->parser->parsing(cp);
+        }
+        endindex = cp->index;
+        cp->index = whileindex;
+        cond = conditionParser.execute(cp);
+    }
+    cp->index = endindex;
+    //skip the }
+    return 1;
     /*if (conditionParser.execute(cp)) {
         //skip the condition and the {
         cp->index = cp->index + 5;

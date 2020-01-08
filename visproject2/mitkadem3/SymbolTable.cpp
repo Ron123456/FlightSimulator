@@ -1,20 +1,33 @@
 #include <string>
 #include "SymbolTable.h"
-//TODO- add the changes to a queue that will execute
-void SymbolTable::createVar(string name, string path, bool connc) {
+
+std::mutex mutex_lock;
+//create a var that either updates or gets updated by sim
+void SymbolTable::createUpdateVar(string name, string path, bool connc) {
 	//default value of a var is 0
 	Var* v = new Var(path,connc);
 	this->var_names.insert({ name,v });
 	this->paths.insert({ path,v });
 }
+//create a normal var
+void SymbolTable::createVar(string name, float val) {
+	//default value of a var is 0
+	//Var* v = new Var(path, connc);
+	Var* v = new Var(val);
+	this->var_names.insert({name,v});
+}
 void SymbolTable::setValueFromName(string name, float val) {
+	mutex_lock.lock();
 	this->var_names.find(name)->second->setVal(val);
+	mutex_lock.unlock();
 	//this line requires the default constructor which we don't have5
 	//this->var_names[name].setVal(val);
 }
+//this method will be used only by the openServerCommand
 void SymbolTable::setValueFromPath(string path, float val) {
+	mutex_lock.lock();
 	this->paths.find(path)->second->setVal(val);
-
+	mutex_lock.unlock();
 	/*std::cout << "updating " << path << "with val " << val;
 	for (auto it = paths.begin(); it != paths.end(); it++)
 	{
@@ -34,3 +47,20 @@ float SymbolTable::get(string varname) {
 bool SymbolTable::containsPathToUpdate(string path) {
 	return this->paths.find(path) != this->paths.end() && this->paths.find(path)->second->getConnc();
 }
+void SymbolTable::deleteVar(string varname) {
+	mutex_lock.lock();
+	//if the var exists
+	if (this->var_names.find(varname) != this->var_names.end()) {
+		//free the var
+		delete (this->var_names.find(varname)->second);
+		//delete from the map
+		this->var_names.erase(varname);
+	}
+	else {
+		cout << "error in deleting a var!" << endl;
+		exit(1);
+	}
+	mutex_lock.unlock();
+}
+
+//in destructor, free the var_names variables as they are both local and updated

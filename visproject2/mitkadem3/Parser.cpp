@@ -19,8 +19,8 @@ void Parser::parsing(Compiler *cp) {
         cp->index += commands.at(cp->token[cp->index])->execute(cp);
     }
     else {
-        //TODO see how changeVar works
-        ChangeVarCommand* changevar =
+        ChangeVarCommand* changevar;
+        cp->index += changevar->execute(cp);
     }
    //}
 }

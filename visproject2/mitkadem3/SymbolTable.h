@@ -4,6 +4,7 @@
 #include "Var.h"
 #include <unordered_map>
 #include <iostream>
+#include <mutex>
 class SymbolTable {
 public:
 //will have 2 maps- one with name to path and another path to name
@@ -14,11 +15,13 @@ public:
 //queue of things to execute
 	queue <string> asd;
 
-	//connc =1 means ->, and <- is 0
-	void createVar(string name, string path, bool connc);
+	//connc =1 means <-, and -> is 0
+	void createUpdateVar(string name, string path, bool connc);
+	void createVar(string name,float val);
 	void setValueFromName(string name,float val);
 	void setValueFromPath(string path,float val);
 	float get(string varname);
 	bool containsPathToUpdate(string path);
+	void deleteVar(string varname);
 };
 #endif
