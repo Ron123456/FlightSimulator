@@ -4,15 +4,10 @@ Flight Simulator is a C++ program for reading a file with commands to [FlightGea
 
 ## Installation
 
-Clone the files from the project using the webpage or  by typing
+Clone the files from the project using the webpage or  by typing 
  ```git clone http://https://github.com/Ron123456/FlightSimulator```
 compile the files with g++ and execute with the path to the text file
-```./a.out fly.txt
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
-
-bash
-pip install foobar
-
+```./a.out fly.txt```
 
 ## Usage
 There are many commands you can type in the text file:
