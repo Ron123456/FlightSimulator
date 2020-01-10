@@ -29,9 +29,9 @@ int DefineVarCommand::execute(Compiler* cp) {
 		string expression= cp->token[cp->index + 3];
 		//calc the val using ConditionParser
 		ConditionParser conParser = ConditionParser();
-		string val =conParser.varsFromExp(expression, cp);
+        double val =conParser.varsFromExp(expression, cp);
 		//TODO that f=val
-		float f = 1;
+		float f = val;
 		cp->getSymbolTable().createVar(varName,f);
 		return 3;
 	}

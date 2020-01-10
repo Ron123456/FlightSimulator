@@ -42,3 +42,5 @@ void Parser::createmap() {
     commands.insert({"if", ifCommand});
 
 }
+
+Parser::Parser() {}

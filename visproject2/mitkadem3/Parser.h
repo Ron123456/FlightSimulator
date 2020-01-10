@@ -13,6 +13,8 @@ class Parser {
 public:
     void createmap();
     void parsing(Compiler* cp);
+
+    Parser();
 };
 
 
