@@ -45,7 +45,7 @@ float SymbolTable::get(string varname) {
 	//return this->var_names[varname].getVal();
 }
 bool SymbolTable::containsPathToUpdate(string path) {
-	return this->paths.find(path) != this->paths.end() && this->paths.find(path)->second->getConnc();
+	return this->paths.find(path) != this->paths.end() && (this->paths.find(path)->second->getConnc()==1);
 }
 void SymbolTable::deleteVar(string varname) {
 	mutex_lock.lock();
@@ -61,6 +61,11 @@ void SymbolTable::deleteVar(string varname) {
 		exit(1);
 	}
 	mutex_lock.unlock();
+}
+//check to see if the connc type is 0- which means we need to update the sim as well
+bool SymbolTable::isUpdateToSim(string varname) {
+	return this->var_names.find(varname) != this->var_names.end() &&
+		(this->var_names.find(varname)->second->getConnc() == 0);
 }
 
 //in destructor, free the var_names variables as they are both local and updated

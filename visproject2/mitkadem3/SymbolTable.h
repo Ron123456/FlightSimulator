@@ -23,5 +23,7 @@ public:
 	float get(string varname);
 	bool containsPathToUpdate(string path);
 	void deleteVar(string varname);
+	//check to see if when chnaged, need to send a msg to the sim
+	bool isUpdateToSim(string varname);
 };
 #endif
