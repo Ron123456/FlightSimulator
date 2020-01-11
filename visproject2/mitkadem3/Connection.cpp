@@ -10,6 +10,7 @@
 
 using namespace std;
 int Connection::openconnection(int port, string ip) {
+    openedConn = 0;
     sockaddr_in address;
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = inet_addr(ip.c_str());
@@ -26,6 +27,7 @@ int Connection::openconnection(int port, string ip) {
         cerr << "couldnt connect to host server"<<endl;
         return -2;
     }
+    openedConn = 1;
 }
 
 int Connection::closeconnection() {
@@ -47,5 +49,20 @@ int Connection::senddata(string path, float val) {
 
 void Connection::open(int port, string ip) {
     thread openconnthread(&Connection::openconnection,port,ip);
+    // Get starting timepoint
+    auto start = std::chrono::high_resolution_clock::now();
+    //hold it until connection is made
+    while (!this->openedConn) {
+        /*//print every 10 secs
+        if (std::chrono::duration_cast<std::chrono::seconds>
+                    (std::chrono::high_resolution_clock::now() - start).count()>10) {
+            cout << "holding main thread..." << endl;
+            start = std::chrono::high_resolution_clock::now();
+        }*/
+
+    }
+    //detach the thread from the current function
+
+    openconnthread.detach();
     //TODO check if need to lock global mutex
 }
