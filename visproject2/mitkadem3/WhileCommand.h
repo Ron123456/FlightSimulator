@@ -6,7 +6,7 @@
 #define FLIGHTSIMULATOR_WHILECOMMAND_H
 
 #include "Command.h"
-
+#include "ConditionParser.h"
 class WhileCommand : public Command {
 
 public:

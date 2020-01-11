@@ -6,7 +6,7 @@
 #include <string>
 #include "Compiler.h"
 #include "Connection.h"
-
+#include "ConditionParser.h"
 
 class ConnectCommand : public Command {
 public:

@@ -48,7 +48,7 @@ int Connection::senddata(string path, float val) {
 }
 
 void Connection::open(int port, string ip) {
-    thread openconnthread(&Connection::openconnection,port,ip);
+    thread openconnthread(&Connection::openconnection,this,port,ip);
     // Get starting timepoint
     auto start = std::chrono::high_resolution_clock::now();
     //hold it until connection is made

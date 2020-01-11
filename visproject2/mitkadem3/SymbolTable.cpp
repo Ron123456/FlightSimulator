@@ -44,6 +44,9 @@ float SymbolTable::get(string varname) {
 	//this line below requires the default constructor which we don't have5
 	//return this->var_names[varname].getVal();
 }
+string SymbolTable::getPath(string varname) {
+	return this->paths.find(varname)->second->getPath();
+}
 bool SymbolTable::containsPathToUpdate(string path) {
 	return this->paths.find(path) != this->paths.end() && (this->paths.find(path)->second->getConnc()==1);
 }

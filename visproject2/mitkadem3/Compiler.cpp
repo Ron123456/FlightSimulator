@@ -10,13 +10,13 @@ void Compiler::read(fstream& f) {
 
 	//vector<string> tokens = lexer(f);
 	lexer(f);
-
+	/*
 	cout << "lexer finished" << endl;
 	for (int i = 0; (unsigned int)i < token.size(); i++) {
 		cout << token[i] << ",";
 	}
 	cout << endl;
-	this->sym = SymbolTable();
+	
 	this->sym.createUpdateVar("time", "/sim/time/warp", 1);
 	this->sym.createUpdateVar("airspeed", "/instrumentation/airspeed-indicator/indicated-speed-kt", 1);
 	auto it = this->sym.paths.begin();
@@ -28,20 +28,23 @@ void Compiler::read(fstream& f) {
 			<< std::endl;
 	}
 	openServerCommand* cd = new openServerCommand();
-	cd->execute(this);
+	cd->execute(this);*/
 	std::cout << "running program" << endl;
 	// Get starting timepoint 
 	auto start = std::chrono::high_resolution_clock::now();
 	// Get starting timepoint 
 	auto start2 = std::chrono::high_resolution_clock::now();
+	while (this->index < token.size()) {
+		this->parser->parsing(this);
+	}
 	//run the actual program
 	//this is to test that main doesn't stop, we don't have a parser yet
 	while (true) {
-		if (std::chrono::duration_cast<std::chrono::seconds>
+		/*if (std::chrono::duration_cast<std::chrono::seconds>
 			(std::chrono::high_resolution_clock::now() - start2).count() > 6) {
 			cout << "time is " << std::to_string(this->sym.get("time")) << endl;
 			start2 = std::chrono::high_resolution_clock::now();
-		}
+		}*/
 		//print every 10 secs
 		if (std::chrono::duration_cast<std::chrono::seconds>
 			(std::chrono::high_resolution_clock::now() - start).count() > 10) {
@@ -49,7 +52,7 @@ void Compiler::read(fstream& f) {
 			start = std::chrono::high_resolution_clock::now();
 		}
 	}
-	this->parser(token);
+	//this->parser(token);
 	std::cout << "compiler finshed" << endl;
 }
 //a new substr better suited for our needs
@@ -325,6 +328,7 @@ void Compiler::lexer(fstream& f) {
 
 Compiler::Compiler() {
     parser = new Parser();
+	this->sym = SymbolTable();
     parser->createmap();
 }
 

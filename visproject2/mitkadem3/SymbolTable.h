@@ -25,5 +25,7 @@ public:
 	void deleteVar(string varname);
 	//check to see if when chnaged, need to send a msg to the sim
 	bool isUpdateToSim(string varname);
+	//get the path in the sim for a name of an updating var (->)
+	string getPath(string varname);
 };
 #endif

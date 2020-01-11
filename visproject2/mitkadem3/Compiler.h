@@ -8,7 +8,7 @@
 #include "Command.h"
 #include "SymbolTable.h"
 #include "Parser.h"
-
+#include "Connection.h"
 using namespace std;
 /**
  * Compiler Interface

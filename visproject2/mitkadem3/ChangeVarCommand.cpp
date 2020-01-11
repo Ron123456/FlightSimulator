@@ -11,12 +11,13 @@ int ChangeVarCommand::execute(Compiler* cp) {
 	string express = cp->token[cp->index+2];
 	//somehow calculate the actual float value, using conditionParser
 	ConditionParser conParser = ConditionParser();
-	string s =conParser.varsFromExp(express, cp);
+	double val =conParser.varsFromExp(express, cp);
 	//TODO parser work properly
-	float val = 1;
+	
 	//update the symbol table
 	cp->getSymbolTable().setValueFromName(varName, val);
 	//TODO add connection.send
+	cp->connection.senddata("set"+cp->getSymbolTable().getPath(varName),val);
 	//cp->connection.senddata(path, value(float));
 	return 3;
 

@@ -7,6 +7,7 @@
 
 #include "Command.h"
 #include "Compiler.h"
+#include "ConditionParser.h"
 class SleepCommand : public Command{
 public:
 	int execute(Compiler* cp) override;

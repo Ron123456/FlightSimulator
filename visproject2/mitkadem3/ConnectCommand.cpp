@@ -5,6 +5,7 @@
 #include "ConnectCommand.h"
 
 int ConnectCommand::execute(Compiler *cp) {
-    cp->connection.open(atoi(cp->token[cp->index+2].c_str()), cp->token[cp->index+1]);
+	ConditionParser conParser = ConditionParser();
+    cp->connection.open(conParser.varsFromExp(cp->token[cp->index + 2], cp), cp->token[cp->index+1]);
     return 3;
 }

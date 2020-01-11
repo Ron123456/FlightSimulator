@@ -16,7 +16,10 @@ void openServerCommand::openConnection(Compiler* cp, string s) {
 	//int port = atoi(s);?
 	//to surpass g++ notes
 	(void)(s);
-	int port=5400;
+	ConditionParser conParser = ConditionParser();
+	//we can get expressions as the port
+	int port= conParser.varsFromExp(s, cp);
+	//int port=5400;
 	int sockid = socket(AF_INET, SOCK_STREAM, 0);
 	if (sockid == -1) {
 		cout << "error in openserver socket" << endl;
@@ -147,7 +150,7 @@ int openServerCommand::execute(Compiler* cp) {
 	cout << "detached the thread" << endl;
 	//openConnection(cp,s);
 	//change later!
-	return 1;
+	return 2;
 
 }
 //check if all of the chars in the string are \n

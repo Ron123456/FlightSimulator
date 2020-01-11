@@ -16,5 +16,6 @@ public:
 	void setVal(float val) { this->value = val; };
 	float getVal() { return this->value; };
 	bool getConnc() { return this->updateFromSim; };
+	string getPath() { return this->location; };
 };
 #endif
