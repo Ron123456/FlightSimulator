@@ -26,7 +26,7 @@ class Compiler {
 	void lexer(fstream& f);
 public:
     Connection connection;
-    Parser* parser;
+    Parser* parser = new Parser();
     vector<string> token;
     int index = 0;
 	void read(fstream& f);

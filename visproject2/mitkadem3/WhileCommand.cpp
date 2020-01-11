@@ -3,7 +3,7 @@
 //
 
 #include "WhileCommand.h"
-int execute(Compiler* cp) {
+int WhileCommand::execute(Compiler* cp) {
     ConditionParser conditionParser = ConditionParser();
     int whileindex = cp->index;
     //after the {

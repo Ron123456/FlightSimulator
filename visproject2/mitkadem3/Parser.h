@@ -5,7 +5,9 @@
 #ifndef FLIGHTSIMULATOR_PARSER_H
 #define FLIGHTSIMULATOR_PARSER_H
 
-#include <unordered_map>
+#include <map>
+#include <string>
+/*#include "Command.h"
 #include "openServerCommand.h"
 #include "ConnectCommand.h"
 #include "DefineVarCommand.h"
@@ -13,12 +15,21 @@
 #include "SleepCommand.h"
 #include "WhileCommand.h"
 #include "IfCommand.h"
-#include "ChangeVarCommand.h"
-//#include "Command.h"
+#include "ChangeVarCommand.h"*/
+class Command;
+class openServerCommand;
+class ConnectCommand;
+class DefineVarCommand;
+class PrintCommand;
+class SleepCommand;
+class WhileCommand;
+class IfCommand;
+class ChnageVarCommand;
+//#include "ChangeVarCommand.h"
 //#include "Compiler.h"
 class Compiler;
 class Parser {
-	openServerCommand* openServerCommand1 = new openServerCommand();
+	/*openServerCommand* openServerCommand1 = new openServerCommand();
 	ConnectCommand* connectCommand = new ConnectCommand();
 	DefineVarCommand* defineVarCommand = new DefineVarCommand();
 	PrintCommand* printCommand = new PrintCommand();
@@ -31,7 +42,9 @@ class Parser {
 	{ "var" ,defineVarCommand }, { "Print",printCommand },
 	{ "Sleep" , sleepCommand }, { "while" , whileCommand },
 	{ "if" , ifCommand } 
-	};
+	};*/
+	std::map<std::string, Command*> commands;
+	//map<string,int
 public:
     void createmap();
     void parsing(Compiler* cp);
