@@ -5,12 +5,12 @@
 #define FLIGHTSIMULATOR_CONNECTCOMMAND_H
 #include <string>
 #include "Compiler.h"
-
+#include "Connection.h"
 
 
 class ConnectCommand : public Command {
 public:
-	int execute(Compiler* cp) override { return 1; };
+	int execute(Compiler* cp) override;
 };
 
 

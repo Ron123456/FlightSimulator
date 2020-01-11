@@ -19,10 +19,13 @@ class Compiler {
 	//the thing for parser- that's for you amitush
 	unordered_map<string, Command> commands;
 
+
+
 	//void parser(vector<string> tokens);
 	//copy constructor of fstream is not allowed so I used by refrence
 	void lexer(fstream& f);
 public:
+    Connection connection;
     Parser* parser;
     vector<string> token;
     int index = 0;

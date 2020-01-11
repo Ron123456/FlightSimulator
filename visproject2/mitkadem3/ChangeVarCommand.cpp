@@ -17,6 +17,7 @@ int ChangeVarCommand::execute(Compiler* cp) {
 	//update the symbol table
 	cp->getSymbolTable().setValueFromName(varName, val);
 	//TODO add connection.send
+	//cp->connection.senddata(path, value(float));
 	return 3;
 
 }
