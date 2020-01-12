@@ -30,7 +30,7 @@ public:
     vector<string> token;
     int index = 0;
 	void read(fstream& f);
-
+	bool closeConnection=false;
     Compiler();
 
     SymbolTable* getSymbolTable() { return this->sym; };

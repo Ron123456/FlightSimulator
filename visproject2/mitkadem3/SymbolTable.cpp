@@ -10,7 +10,7 @@ void SymbolTable::createUpdateVar(string name, string path, bool connc) {
 	//this->paths.insert({ path,v });
 	this->varsToPaths.insert({name,path});
 	this->pathsToVars.insert({path,name});
-	cout << name << " created in symboltable" << endl;
+	//cout << name << " created in symboltable" << endl;
 	/*cout << "CURRENT VARS------" << endl;
 	for (auto it = var_names.begin(); it != var_names.end(); it++)
 	{
@@ -26,7 +26,7 @@ void SymbolTable::createVar(string name, float val) {
 	//Var* v = new Var(path, connc);
 	Var* v = new Var(val);
 	this->var_names.insert({name,v});
-	cout << name << " created normal var in symboltable" << endl;
+	//cout << name << " created normal var in symboltable" << endl;
 }
 void SymbolTable::setValueFromName(string name, float val) {
 	if (this->var_names.find(name) != this->var_names.end()) {
@@ -74,14 +74,14 @@ void SymbolTable::setValueFromPath(string path, float val) {
 }
 float SymbolTable::get(string varname) {
 	if (varname.compare("heading")==0) {
-		cout << "CURRENT VARS" << endl;
+		/*cout << "CURRENT VARS" << endl;
 		for (auto it = var_names.begin(); it != var_names.end(); it++)
 		{
 			std::cout << it->first  // path (key)
 				<< ':'
 				<< std::to_string(it->second->getVal())   // string's value 
 				<< std::endl;
-		}
+		}*/
 	}
 	return this->var_names.find(varname)->second->getVal();
 	//this line below requires the default constructor which we don't have5
@@ -94,13 +94,13 @@ string SymbolTable::getPath(string varname) {
 	}
 	else {
 		cerr << "NOT FOUND PATH " << varname << endl;
-		for (auto it = varsToPaths.begin(); it != varsToPaths.end(); it++)
+		/*for (auto it = varsToPaths.begin(); it != varsToPaths.end(); it++)
 		{
 			std::cout << it->first  // path (key)
 				<< "val:"
 				<< (it->second)   // string's value 
 				<< std::endl;
-		}
+		}*/
 		return "";
 	}
 }

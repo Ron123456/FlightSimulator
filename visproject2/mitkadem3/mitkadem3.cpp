@@ -16,10 +16,10 @@ int main(int argc, char* argv[]){
 	if (!input_file) {
 		throw "could not open file!";
 	}
-	std::cout << "main program started" << endl;;
+	//std::cout << "main program started" << endl;;
 	Compiler cm;
 	cm.read(input_file);
 	
 
-    std::cout << "Hello World!\n"; 
+   // std::cout << "Hello World!\n"; 
 }

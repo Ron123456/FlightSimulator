@@ -25,7 +25,7 @@ int Connection::openconnection(int port, string ip) {
     address.sin_family = AF_INET;
 	//TODO- check if need to remove "" from ip
 	ip = ip.substr(1, ip.length() - 2);
-    cout << "ip:" << ip << endl;
+    //cout << "ip:" << ip << endl;
     //address.sin_addr.s_addr = inet_addr(ip.c_str());
 	//address.sin_addr.s_addr = inet_addr("127.0.0.1");
     address.sin_port = htons(5402);
@@ -54,7 +54,7 @@ int Connection::closeconnection() {
 int Connection::senddata(string path, float val) {
     string data = path + " " + to_string(val);
     if (is_connect != -1) {
-		cout << "sending data- " << data<<endl;
+		//cout << "sending data- " << data<<endl;
         return send(client_socket, data.c_str(), data.size(), 0);
     } else {
         return -1;
@@ -79,6 +79,6 @@ void Connection::open(int port, string ip) {
 
     openconnthread.detach();
 
-	cout << "detached connection" << endl;
+	//cout << "detached connection" << endl;
     //TODO check if need to lock global mutex
 }

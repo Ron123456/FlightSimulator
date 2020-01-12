@@ -4,7 +4,7 @@
 
 #include "SleepCommand.h"
 #include <thread>
-//make the thread sleep for X seconds
+//make the thread sleep for X miliseconds
 int SleepCommand::execute(Compiler* cp) {
 	ConditionParser conParser = ConditionParser();
 	//get the int from the tokens to sleep for number of seconds
