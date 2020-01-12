@@ -11,8 +11,8 @@
 
 using namespace std;
 int Connection::openconnection(int port, string ip) {
-	cout << "port:" << port << endl;
-	cout << "ip:" << ip << endl;
+	//cout << "port:" << port << endl;
+	//cout << "ip:" << ip << endl;
     openedConn = false;
 	client_socket = socket(AF_INET, SOCK_STREAM, 0);
 	if (client_socket == -1) {
@@ -24,9 +24,15 @@ int Connection::openconnection(int port, string ip) {
     struct sockaddr_in address;
     address.sin_family = AF_INET;
 	//TODO- check if need to remove "" from ip
+	ip = ip.substr(1, ip.length() - 2);
+    cout << "ip:" << ip << endl;
     //address.sin_addr.s_addr = inet_addr(ip.c_str());
-	address.sin_addr.s_addr = inet_addr("127.0.0.1");
+	//address.sin_addr.s_addr = inet_addr("127.0.0.1");
     address.sin_port = htons(5402);
+    if(inet_pton(AF_INET, ip.c_str(), &address.sin_addr)<=0)
+    {
+        throw "\nInvalid address/ Address not supported";
+    }
 
    
     is_connect = connect(client_socket, (struct sockaddr *) &address, sizeof(address));

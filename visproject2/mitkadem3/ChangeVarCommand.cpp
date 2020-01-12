@@ -13,7 +13,7 @@ int ChangeVarCommand::execute(Compiler* cp) {
 	ConditionParser conParser = ConditionParser();
 	double val =conParser.varsFromExp(express, cp);
 	//TODO parser work properly
-	
+	cout<< "in change: "<< varName<<" "<<val<<endl;
 	//update the symbol table
 	cp->getSymbolTable().setValueFromName(varName, val);
 	//TODO add connection.send
