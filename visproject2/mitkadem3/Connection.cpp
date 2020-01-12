@@ -44,7 +44,7 @@ int Connection::openconnection(int port, string ip) {
 }
 
 int Connection::closeconnection() {
-    if (is_connect == 1) {
+    if (is_connect != -1) {
         return close(client_socket);
     } else {
         return -1;
@@ -53,7 +53,7 @@ int Connection::closeconnection() {
 
 int Connection::senddata(string path, float val) {
     string data = path + " " + to_string(val);
-    if (is_connect == 1) {
+    if (is_connect != -1) {
 		cout << "sending data- " << data<<endl;
         return send(client_socket, data.c_str(), data.size(), 0);
     } else {

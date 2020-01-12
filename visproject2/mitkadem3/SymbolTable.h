@@ -11,7 +11,11 @@ public:
 	//name of var in program as key
 	unordered_map<string,Var*> var_names;
 	//simulation path as key
-	unordered_map<string, Var*> paths;
+	//unordered_map<string, Var*> paths;
+	//path name to var name
+	unordered_map<string, string> pathsToVars;
+	//var name to path name
+	unordered_map<string, string> varsToPaths;
 //queue of things to execute
 	queue <string> asd;
 

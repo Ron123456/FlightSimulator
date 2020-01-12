@@ -15,7 +15,7 @@ using namespace std;
  */
 class Compiler {
 	//later for scopes of FUNCTIONS- we'll do a list of symbol table for each scope
-	SymbolTable sym;
+	SymbolTable* sym;
 	//the thing for parser- that's for you amitush
 	unordered_map<string, Command> commands;
 
@@ -33,6 +33,6 @@ public:
 
     Compiler();
 
-    SymbolTable getSymbolTable() { return this->sym; };
+    SymbolTable* getSymbolTable() { return this->sym; };
 };
 #endif

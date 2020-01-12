@@ -77,9 +77,9 @@ void openServerCommand::openConnection(Compiler* cp, string s) {
 				//cout << listofvars[index];
 				//cout << "msg is "<<msg << endl;
 				//if we saved a var with that path
-				if (cp->getSymbolTable().containsPathToUpdate(listofvars[index])) {
+				if (cp->getSymbolTable()->containsPathToUpdate(listofvars[index])) {
 					//cout << " updated var" << endl;
-					cp->getSymbolTable().setValueFromPath(listofvars[index], stof(msg.substr(0,msg.find(","))));
+					cp->getSymbolTable()->setValueFromPath(listofvars[index], stof(msg.substr(0,msg.find(","))));
 
 				}
 				//cut the string
@@ -90,8 +90,8 @@ void openServerCommand::openConnection(Compiler* cp, string s) {
 			//the last parameter
 			//cout << "msg is " << msg << endl;
 			//in the last float
-			if (cp->getSymbolTable().containsPathToUpdate(listofvars[index])) {
-				cp->getSymbolTable().setValueFromPath(listofvars[index], stof(msg));
+			if (cp->getSymbolTable()->containsPathToUpdate(listofvars[index])) {
+				cp->getSymbolTable()->setValueFromPath(listofvars[index], stof(msg));
 			}
 			//cut the string
 			buf= buf.substr(buf.find("\n")+1,string::npos);

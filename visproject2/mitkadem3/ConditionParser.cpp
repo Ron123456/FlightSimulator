@@ -26,7 +26,7 @@ double ConditionParser::varsFromExp(string &exp, Compiler* compiler) {
                 c = exp.at(i);
             }
             //find variable's value
-            float val = compiler->getSymbolTable().get(var);
+            float val = compiler->getSymbolTable()->get(var);
             //TODO check float instead of int
             var = to_string(val);
             //if its -- its a + cause we don't know to deal with --.
