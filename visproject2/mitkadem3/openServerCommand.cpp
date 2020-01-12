@@ -41,7 +41,7 @@ void openServerCommand::openConnection(Compiler* cp, string s) {
 		cout << "listening open server failed" << endl;
 		exit(1);
 	}
-	cout << "OpenServerCommand-trying to accept:" << endl;
+	//cout << "OpenServerCommand-trying to accept:" << endl;
 	//this is the flight simulator socket
 	int client_socket = accept(sockid, (struct sockaddr *) &address, (socklen_t*)&addrlen);
 	//int client_socket = accept(sockid, (struct sockaddr *) &address, (socklen_t*)&addrlen);
@@ -49,8 +49,8 @@ void openServerCommand::openConnection(Compiler* cp, string s) {
 		cout << "client_socket open server failed" << endl;
 		exit(1);
 	}
-	cout << "made connection" << endl;
-	while (true) {
+	//cout << "made connection" << endl;
+	while (!cp->closeConnection) {
 		//cout << "got to here" << endl;
 		//if()
 		//parse the data- we get float,float,float and need to put in the sys table, base on the XML data
@@ -121,7 +121,7 @@ void openServerCommand::openConnection(Compiler* cp, string s) {
 		}*/
 		//update the sym table of compiler
 	}
-	cout << "finished loop" << endl;
+	//cout << "finished loop" << endl;
 	//close listening socket
 	close(sockid);
 }
@@ -137,17 +137,17 @@ int openServerCommand::execute(Compiler* cp) {
 	//hold it until connection is made
 	while (!this->openedConn) {
 		//print every 10 secs
-		if (std::chrono::duration_cast<std::chrono::seconds>
+		/*if (std::chrono::duration_cast<std::chrono::seconds>
 			(std::chrono::high_resolution_clock::now() - start).count()>10) {
 			cout << "holding main thread..." << endl;
 			start = std::chrono::high_resolution_clock::now();
-		}
+		}*/
 
 	}
 	//detach the thread from the current function
 	
 	thread1.detach();
-	cout << "detached the thread" << endl;
+	//cout << "detached the thread" << endl;
 	//openConnection(cp,s);
 	//change later!
 	return 2;

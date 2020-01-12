@@ -23,7 +23,7 @@
 #include "ChangeVarCommand.h"
 void Parser::parsing(Compiler *cp) {
    while (cp->index < cp->token.size()) {
-       cout<<"command is "<<cp->token[cp->index]<<endl;
+       //cout<<"command is "<<cp->token[cp->index]<<endl;
     if (this->commands.find(cp->token[cp->index]) != this->commands.end())
     {
         cp->index += this->commands.at(cp->token[cp->index])->execute(cp);

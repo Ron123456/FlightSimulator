@@ -11,15 +11,15 @@ void Compiler::read(fstream& f) {
     //vector<string> tokens = lexer(f);
     lexer(f);
 
-    cout << "lexer finished" << endl;
+   /* cout << "lexer finished" << endl;
     for (int i = 0; (unsigned int)i < token.size(); i++) {
         cout << token[i] << ",";
-    }
-    cout << endl;
+    }*/
+   /* cout << endl;
     ConditionParser cd = ConditionParser();
     string s = "5406";
     int p = cd.varsFromExp(s, this);
-    cout << "PDSPDDS" << p << endl;
+    cout << "PDSPDDS" << p << endl;*/
     
     /*this->sym->createUpdateVar("time", "/sim/time/warp", 1);
     this->sym->createUpdateVar("airspeed", "/instrumentation/airspeed-indicator/indicated-speed-kt", 1);
@@ -33,7 +33,7 @@ void Compiler::read(fstream& f) {
     }
     openServerCommand* cd2 = new openServerCommand();
     cd2->execute(this);*/
-    std::cout << "running program" << endl;
+    //std::cout << "running program" << endl;
     // Get starting timepoint
     auto start = std::chrono::high_resolution_clock::now();
     // Get starting timepoint
@@ -43,21 +43,23 @@ void Compiler::read(fstream& f) {
     }
     //run the actual program
     //this is to test that main doesn't stop, we don't have a parser yet
-    while (true) {
+   /* while (true) {
         /*if (std::chrono::duration_cast<std::chrono::seconds>
             (std::chrono::high_resolution_clock::now() - start2).count() > 6) {
             cout << "time is " << std::to_string(this->sym.get("time")) << endl;
             start2 = std::chrono::high_resolution_clock::now();
-        }*/
+        }
         //print every 10 secs
         if (std::chrono::duration_cast<std::chrono::seconds>
                     (std::chrono::high_resolution_clock::now() - start).count() > 10) {
             std::cout << "running program" << endl;
             start = std::chrono::high_resolution_clock::now();
         }
-    }
+    }*/
+	this->closeConnection = true;
+	this->connection.closeconnection();
     //this->parser(token);
-    std::cout << "compiler finshed" << endl;
+    //std::cout << "compiler finshed" << endl;
 }
 //a new substr better suited for our needs
 string newsubstr(string s, size_t start_index, size_t end_index) {
