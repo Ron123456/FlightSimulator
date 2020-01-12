@@ -60,20 +60,20 @@ void openServerCommand::openConnection(Compiler* cp, string s) {
 		if (!this->openedConn) {
 			this->openedConn = true;
 		}
-		cout << "read data" << endl;
+		//cout << "read data" << endl;
 		//to have no notes  on g++
 		valread = valread;
 		string buf(buffer);
-		cout << "buffer: " << buffer << endl;
+		//cout << "buffer: " << buffer << endl;
 		//it is possible to get more than 1 list of vars so we seperate by \n
 		//buf is usually filled with \n at the end of it
 		while (buf.find("\n") != string::npos && !isOnlyNewlines(buf)) {
 			string msg = buf.substr(0,buf.find("\n"));
 			int index = 0;
-			cout <<"buf is "<< buf << endl;
+			//cout <<"buf is "<< buf << endl;
 			//interpet msg to update vals for sym table
 			while (msg.find(",") != string::npos) {
-				cout << std::to_string(stof(msg.substr(0, msg.find(",")))) << ",";
+				//cout << std::to_string(stof(msg.substr(0, msg.find(",")))) << ",";
 				//cout << listofvars[index];
 				//cout << "msg is "<<msg << endl;
 				//if we saved a var with that path
@@ -88,7 +88,7 @@ void openServerCommand::openConnection(Compiler* cp, string s) {
 				index++;
 			}
 			//the last parameter
-			cout << "msg is " << msg << endl;
+			//cout << "msg is " << msg << endl;
 			//in the last float
 			if (cp->getSymbolTable().containsPathToUpdate(listofvars[index])) {
 				cp->getSymbolTable().setValueFromPath(listofvars[index], stof(msg));

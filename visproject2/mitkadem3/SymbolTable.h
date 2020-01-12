@@ -9,7 +9,7 @@ class SymbolTable {
 public:
 //will have 2 maps- one with name to path and another path to name
 	//name of var in program as key
-	unordered_map<string,Var*> vafr_names;
+	unordered_map<string,Var*> var_names;
 	//simulation path as key
 	unordered_map<string, Var*> paths;
 //queue of things to execute
