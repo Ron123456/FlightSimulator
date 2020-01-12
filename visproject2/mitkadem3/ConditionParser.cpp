@@ -23,7 +23,9 @@ double ConditionParser::varsFromExp(string &exp, Compiler* compiler) {
             while ((!(isOperator(c) || isParenthesis(c) || c == ' ')) && i < exp.length()) {
                 var.append(1,exp.at(i));
                 i++;
-                c = exp.at(i);
+                if (i < exp.length()) {
+                    c = exp.at(i);
+                }
             }
             //find variable's value
             float val = compiler->getSymbolTable()->get(var);
