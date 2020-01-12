@@ -20,19 +20,19 @@ void Compiler::read(fstream& f) {
     string s = "5406";
     int p = cd.varsFromExp(s, this);
     cout << "PDSPDDS" << p << endl;
-    /*
-    this->sym.createUpdateVar("time", "/sim/time/warp", 1);
-    this->sym.createUpdateVar("airspeed", "/instrumentation/airspeed-indicator/indicated-speed-kt", 1);
-    auto it = this->sym.paths.begin();
-    for (it = this->sym.paths.begin(); it != this->sym.paths.end(); it++)
+    
+    /*this->sym->createUpdateVar("time", "/sim/time/warp", 1);
+    this->sym->createUpdateVar("airspeed", "/instrumentation/airspeed-indicator/indicated-speed-kt", 1);
+    auto it = this->sym->paths.begin();
+    for (it = this->sym->paths.begin(); it != this->sym->paths.end(); it++)
     {
         std::cout << it->first  // path (key)
             << ':'
             << std::to_string(it->second->getVal())   // string's value
             << std::endl;
     }
-    openServerCommand* cd = new openServerCommand();
-    cd->execute(this);*/
+    openServerCommand* cd2 = new openServerCommand();
+    cd2->execute(this);*/
     std::cout << "running program" << endl;
     // Get starting timepoint
     auto start = std::chrono::high_resolution_clock::now();
@@ -334,6 +334,6 @@ void Compiler::lexer(fstream& f) {
 
 Compiler::Compiler() {
     parser = new Parser();
-    this->sym = SymbolTable();
+    this->sym = new SymbolTable();
     parser->createmap();
 }

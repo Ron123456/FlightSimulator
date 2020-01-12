@@ -12,7 +12,7 @@ int DefineVarCommand::execute(Compiler* cp) {
 		string path = cp->token[cp->index + 4];
 		//delete the quotes from the string 
 		path = path.substr(1, path.length() - 2);
-		cp->getSymbolTable().createUpdateVar(varName, path, 0);
+		cp->getSymbolTable()->createUpdateVar(varName, path, 0);
 		return 5;
 	}
 	else if (op.compare("<-") == 0) {
@@ -20,7 +20,7 @@ int DefineVarCommand::execute(Compiler* cp) {
 		string path = cp->token[cp->index + 4];
 		//delete the quotes from the string 
 		path = path.substr(1, path.length()-2);
-		cp->getSymbolTable().createUpdateVar(varName, path, 1);
+		cp->getSymbolTable()->createUpdateVar(varName, path, 1);
 		return 5;
 	}
 	//it is a normal var then
@@ -32,7 +32,7 @@ int DefineVarCommand::execute(Compiler* cp) {
         double val =conParser.varsFromExp(expression, cp);
 		//TODO that f=val
 		float f = val;
-		cp->getSymbolTable().createVar(varName,f);
+		cp->getSymbolTable()->createVar(varName,f);
 		return 3;
 	}
 	//shuldn't get to here

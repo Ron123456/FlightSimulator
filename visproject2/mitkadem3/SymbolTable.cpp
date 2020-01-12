@@ -7,7 +7,18 @@ void SymbolTable::createUpdateVar(string name, string path, bool connc) {
 	//default value of a var is 0
 	Var* v = new Var(path,connc);
 	this->var_names.insert({ name,v });
-	this->paths.insert({ path,v });
+	//this->paths.insert({ path,v });
+	this->varsToPaths.insert({name,path});
+	this->pathsToVars.insert({path,name});
+	cout << name << " created in symboltable" << endl;
+	/*cout << "CURRENT VARS------" << endl;
+	for (auto it = var_names.begin(); it != var_names.end(); it++)
+	{
+		std::cout << it->first  // path (key)
+			<< ':'
+			<< std::to_string(it->second->getVal())   // string's value 
+			<< std::endl;
+	}*/
 }
 //create a normal var
 void SymbolTable::createVar(string name, float val) {
@@ -15,18 +26,40 @@ void SymbolTable::createVar(string name, float val) {
 	//Var* v = new Var(path, connc);
 	Var* v = new Var(val);
 	this->var_names.insert({name,v});
+	cout << name << " created normal var in symboltable" << endl;
 }
 void SymbolTable::setValueFromName(string name, float val) {
-	mutex_lock.lock();
-	this->var_names.find(name)->second->setVal(val);
-	mutex_lock.unlock();
+	if (this->var_names.find(name) != this->var_names.end()) {
+		mutex_lock.lock();
+		this->var_names.find(name)->second->setVal(val);
+		mutex_lock.unlock();
+		/*cout << "CURRENT VARS------" << endl;
+		for (auto it = var_names.begin(); it != var_names.end(); it++)
+		{
+			std::cout << it->first  // path (key)
+				<< ':'
+				<< std::to_string(it->second->getVal())   // string's value 
+				<< std::endl;
+		}*/
+	}
+	else {
+		cerr << name << " NOT FOUND" << endl;
+		cout << "CURRENT VARS" << endl;
+		for (auto it = var_names.begin(); it != var_names.end(); it++)
+		{
+			std::cout << it->first  // path (key)
+				<< ':'
+				<< std::to_string(it->second->getVal())   // string's value 
+				<< std::endl;
+		}
+	}
 	//this line requires the default constructor which we don't have5
 	//this->var_names[name].setVal(val);
 }
 //this method will be used only by the openServerCommand
 void SymbolTable::setValueFromPath(string path, float val) {
 	mutex_lock.lock();
-	this->paths.find(path)->second->setVal(val);
+	this->var_names.find(pathsToVars.find(path)->second)->second->setVal(val);
 	mutex_lock.unlock();
 	/*std::cout << "updating " << path << "with val " << val;
 	for (auto it = paths.begin(); it != paths.end(); it++)
@@ -45,10 +78,25 @@ float SymbolTable::get(string varname) {
 	//return this->var_names[varname].getVal();
 }
 string SymbolTable::getPath(string varname) {
-	return this->paths.find(varname)->second->getPath();
+	//cout << "getting path" << endl;
+	if (this->varsToPaths.find(varname) != this->varsToPaths.end()) {
+		return this->varsToPaths.find(varname)->second;
+	}
+	else {
+		cerr << "NOT FOUND PATH " << varname << endl;
+		for (auto it = varsToPaths.begin(); it != varsToPaths.end(); it++)
+		{
+			std::cout << it->first  // path (key)
+				<< "val:"
+				<< (it->second)   // string's value 
+				<< std::endl;
+		}
+		return "";
+	}
 }
 bool SymbolTable::containsPathToUpdate(string path) {
-	return this->paths.find(path) != this->paths.end() && (this->paths.find(path)->second->getConnc()==1);
+	return this->pathsToVars.find(path) != this->pathsToVars.end()
+		&& (this->var_names.find(pathsToVars.find(path)->second)->second->getConnc()==1);
 }
 void SymbolTable::deleteVar(string varname) {
 	mutex_lock.lock();

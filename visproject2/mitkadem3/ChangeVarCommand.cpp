@@ -11,14 +11,17 @@ int ChangeVarCommand::execute(Compiler* cp) {
 	string express = cp->token[cp->index+2];
 	//somehow calculate the actual float value, using conditionParser
 	ConditionParser conParser = ConditionParser();
+
 	double val =conParser.varsFromExp(express, cp);
     cout << varName << " = " << val << endl;
 	//TODO parser work properly
 	cout<< "in change: "<< varName<<" "<<val<<endl;
 	//update the symbol table
-	cp->getSymbolTable().setValueFromName(varName, val);
+	cp->getSymbolTable()->setValueFromName(varName, val);
+	cout << "before sending data" << endl;
 	//TODO add connection.send
-	cp->connection.senddata("set"+cp->getSymbolTable().getPath(varName),val);
+	cp->connection.senddata("set "+cp->getSymbolTable()->getPath(varName),val);
+	cout << "send to sim- " << "set " + cp->getSymbolTable()->getPath(varName) <<" "<<val << endl;
 	//cp->connection.senddata(path, value(float));
 	return 3;
 
