@@ -13,6 +13,10 @@ int IfCommand::execute(Compiler *cp) {
         while (cp->token[cp->index] != "}") {
             cp->parser->parsing(cp);
         }
+    } else {
+        while (cp->token[cp->index] != "}") {
+            cp->index++;
+        }
     }
     //skip }
     return 1;

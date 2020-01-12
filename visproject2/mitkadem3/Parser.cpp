@@ -27,11 +27,13 @@ void Parser::parsing(Compiler *cp) {
     if (this->commands.find(cp->token[cp->index]) != this->commands.end())
     {
         cp->index += this->commands.at(cp->token[cp->index])->execute(cp);
+        return;
     }
     else {
         //cout<<"try"<<endl;
         ChangeVarCommand* changevar = new ChangeVarCommand();
         cp->index += changevar->execute(cp);
+        return;
     }
   }
 }

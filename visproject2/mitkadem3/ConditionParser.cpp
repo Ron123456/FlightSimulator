@@ -13,7 +13,7 @@ double ConditionParser::varsFromExp(string &exp, Compiler* compiler) {
         char c = exp.at(i);
 		//cout << "char is " << c << endl;
         //if char c is not a variable
-        if (isNumber(c) || isOperator(c) || isParenthesis(c) || c == ' ') {
+        if (isNumber(c) || isOperator(c) || isParenthesis(c) || c == ' ' || c== '.') {
 			//cout << "not in var" << endl;
             newexp.append(1, c);
         } else {
@@ -57,10 +57,9 @@ bool ConditionParser::isParenthesis(char c) {
 int ConditionParser::execute(Compiler *cp) {
     //Interpreter interpreter;
     // lexer returns While,leftexp,operator,rightexp
-    double leftexp = varsFromExp(cp->token[cp->index + 1], cp);
+    double left = varsFromExp(cp->token[cp->index + 1], cp);
     string oper = cp->token[cp->index + 2];
-    double rightexp = varsFromExp(cp->token[cp->index + 3], cp);
-    double left = 0, right = 0;
+    double right = varsFromExp(cp->token[cp->index + 3], cp);
     //left = interpreter.interpret(leftexp)->calculate();
     //right = interpreter.interpret(rightexp)->calculate();
     if (oper == "==") {
