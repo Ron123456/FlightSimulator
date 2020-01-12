@@ -11,10 +11,13 @@ double ConditionParser::varsFromExp(string &exp, Compiler* compiler) {
     string newexp = "";
     for (int i=0; i<exp.length(); i++) {
         char c = exp.at(i);
+		cout << "char is " << c << endl;
         //if char c is not a variable
         if (isNumber(c) || isOperator(c) || isParenthesis(c) || c == ' ') {
+			cout << "not in var" << endl;
             newexp.append(1, c);
         } else {
+			cout << "inside var" << endl;
             //while that's a variable
             //while ((!(isNumber(c) || isOperator(c) || isParenthesis(c) || c == ' ')) && i < exp.length()) {
             while ((!(isOperator(c) || isParenthesis(c) || c == ' ')) && i < exp.length()) {
@@ -40,7 +43,7 @@ double ConditionParser::varsFromExp(string &exp, Compiler* compiler) {
 }
 
 bool ConditionParser::isNumber(char c) {
-    return ('0' <= c && c>='9');
+    return ('0' <= c && c<='9');
 }
 
 bool ConditionParser::isOperator(char c) {

@@ -10,13 +10,17 @@ void Compiler::read(fstream& f) {
 
 	//vector<string> tokens = lexer(f);
 	lexer(f);
-	/*
+	
 	cout << "lexer finished" << endl;
 	for (int i = 0; (unsigned int)i < token.size(); i++) {
 		cout << token[i] << ",";
 	}
 	cout << endl;
-	
+	ConditionParser cd = ConditionParser();
+	string s = "5406";
+	int p = cd.varsFromExp(s, this);
+	cout << "PDSPDDS" << p << endl;
+	/*
 	this->sym.createUpdateVar("time", "/sim/time/warp", 1);
 	this->sym.createUpdateVar("airspeed", "/instrumentation/airspeed-indicator/indicated-speed-kt", 1);
 	auto it = this->sym.paths.begin();

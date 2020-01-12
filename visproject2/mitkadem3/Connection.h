@@ -17,7 +17,7 @@
 
 using namespace std;
 class Connection{
-    int openedConn = 0;
+    bool openedConn = false;
     int openconnection(int port, string ip);
     volatile int client_socket;
     volatile int is_connect;
