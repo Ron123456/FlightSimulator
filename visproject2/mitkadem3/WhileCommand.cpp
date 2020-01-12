@@ -10,6 +10,12 @@ int WhileCommand::execute(Compiler* cp) {
     int loopindex = cp->index+5;
     int cond = conditionParser.execute(cp);
     int endindex;
+    if(!cond) {
+        while (cp->token[cp->index] != "}") {
+            cp->index++;
+        }
+        endindex = cp->index;
+    }
     while (cond) {
         cp->index = loopindex;
         while (cp->token[cp->index] != "}") {
