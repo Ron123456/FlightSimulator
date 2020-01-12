@@ -73,6 +73,16 @@ void SymbolTable::setValueFromPath(string path, float val) {
 	//this->paths[path].setVal(val);
 }
 float SymbolTable::get(string varname) {
+	if (varname.compare("heading")==0) {
+		cout << "CURRENT VARS" << endl;
+		for (auto it = var_names.begin(); it != var_names.end(); it++)
+		{
+			std::cout << it->first  // path (key)
+				<< ':'
+				<< std::to_string(it->second->getVal())   // string's value 
+				<< std::endl;
+		}
+	}
 	return this->var_names.find(varname)->second->getVal();
 	//this line below requires the default constructor which we don't have5
 	//return this->var_names[varname].getVal();

@@ -33,7 +33,7 @@ int DefineVarCommand::execute(Compiler* cp) {
 		//TODO that f=val
 		float f = val;
 		cp->getSymbolTable()->createVar(varName,f);
-		return 3;
+		return 4;
 	}
 	//shuldn't get to here
 	return 3;
