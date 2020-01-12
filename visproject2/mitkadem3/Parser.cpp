@@ -22,16 +22,18 @@
 #include "IfCommand.h"
 #include "ChangeVarCommand.h"
 void Parser::parsing(Compiler *cp) {
-   while (cp->index < cp->token.size()) {
+    cout <<"commnd is: " <<  cp->token[cp->index] << endl;
+   //while (cp->index < cp->token.size()) {
     if (this->commands.find(cp->token[cp->index]) != this->commands.end())
     {
+		//cout <<"inside loop" <<cp->token[cp->index]<<endl;
         cp->index += this->commands.at(cp->token[cp->index])->execute(cp);
     }
     else {
         ChangeVarCommand* changevar;
         cp->index += changevar->execute(cp);
     }
-  }
+  //}
 }
 
 void Parser::createmap() {
@@ -42,7 +44,7 @@ void Parser::createmap() {
     SleepCommand* sleepCommand = new SleepCommand();
     WhileCommand* whileCommand = new WhileCommand;
     IfCommand* ifCommand = new IfCommand();
-	commands["openDataServer"] = openServerCommand1;
+	
 	commands.insert({"openDataServer", openServerCommand1});
     commands.insert({"connectControlClient", connectCommand});
     commands.insert({"var", defineVarCommand});
@@ -50,6 +52,7 @@ void Parser::createmap() {
     commands.insert({"Sleep", sleepCommand});
     commands.insert({"while",whileCommand});
     commands.insert({"if", ifCommand});
+	//commands["openDataServer"] = openServerCommand1;
 	/*commands["connectControlClient"]=connectCommand;
 	commands["var"]=defineVarCommand;
 	commands["Print"] =printCommand ;

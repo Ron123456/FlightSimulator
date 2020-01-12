@@ -107,7 +107,12 @@ void Compiler::lexer(fstream& f) {
 		//erase ALL tabs first of all
 		line.erase(remove(line.begin(), line.end(), '\t'), line.end());
 		//remove front spaces
-		line=line.substr(line.find_first_not_of(" "), string::npos);
+        line=line.substr(line.find_first_not_of(" "), string::npos);        
+        //int n = line.find_first_not_of(" ");
+        //cout << line << endl;        
+        //cout << n << endl;
+        //cout << line.size();
+		//line=line.substr(n, line.size()-n);
 		//dont erase spaces in print command
 		if (line.rfind("Print", 0) == 0 ) {
 			tokens.push_back("Print");

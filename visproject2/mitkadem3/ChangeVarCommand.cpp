@@ -12,6 +12,7 @@ int ChangeVarCommand::execute(Compiler* cp) {
 	//somehow calculate the actual float value, using conditionParser
 	ConditionParser conParser = ConditionParser();
 	double val =conParser.varsFromExp(express, cp);
+    cout << varName << " = " << val << endl;
 	//TODO parser work properly
 	
 	//update the symbol table

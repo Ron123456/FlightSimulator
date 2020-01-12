@@ -9,7 +9,7 @@ int SleepCommand::execute(Compiler* cp) {
 	ConditionParser conParser = ConditionParser();
 	//get the int from the tokens to sleep for number of seconds
 	int num = conParser.varsFromExp(cp->token[cp->index + 1],cp);
-	std::this_thread::sleep_for(std::chrono::seconds(num));
+	std::this_thread::sleep_for(std::chrono::milliseconds(num));
 	return 2;
 
 }
