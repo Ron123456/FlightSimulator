@@ -11,8 +11,8 @@
 
 using namespace std;
 int Connection::openconnection(int port, string ip) {
-	cout << "port:" << port << endl;
-	cout << "ip:" << ip << endl;
+	//cout << "port:" << port << endl;
+	//cout << "ip:" << ip << endl;
     openedConn = false;
 	client_socket = socket(AF_INET, SOCK_STREAM, 0);
 	if (client_socket == -1) {

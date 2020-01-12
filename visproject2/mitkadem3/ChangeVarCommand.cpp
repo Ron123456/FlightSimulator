@@ -14,7 +14,7 @@ int ChangeVarCommand::execute(Compiler* cp) {
 	double val =conParser.varsFromExp(express, cp);
     cout << varName << " = " << val << endl;
 	//TODO parser work properly
-	
+	cout<< "in change: "<< varName<<" "<<val<<endl;
 	//update the symbol table
 	cp->getSymbolTable().setValueFromName(varName, val);
 	//TODO add connection.send
