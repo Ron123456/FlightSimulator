@@ -18,6 +18,7 @@ int PrintCommand::execute(Compiler* cp) {
     }
 
     cout << s << endl;
+    //for next command
     return 2;
 
 }

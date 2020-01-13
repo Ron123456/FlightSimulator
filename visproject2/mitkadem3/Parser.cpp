@@ -22,15 +22,16 @@
 #include "IfCommand.h"
 #include "ChangeVarCommand.h"
 void Parser::parsing(Compiler *cp) {
+    //while we can parse the next command
    while (cp->index < cp->token.size()) {
-       //cout<<"command is "<<cp->token[cp->index]<<endl;
+       //parse command if in map and return (only one command)
     if (this->commands.find(cp->token[cp->index]) != this->commands.end())
     {
         cp->index += this->commands.at(cp->token[cp->index])->execute(cp);
         return;
     }
+    //not in map -> change variable
     else {
-        //cout<<"try"<<endl;
         ChangeVarCommand* changevar = new ChangeVarCommand();
         cp->index += changevar->execute(cp);
         return;
@@ -39,6 +40,7 @@ void Parser::parsing(Compiler *cp) {
 }
 
 void Parser::createmap() {
+    //create the map with the different commands identifiers and Command objects
     openServerCommand* openServerCommand1 = new openServerCommand();
     ConnectCommand* connectCommand = new ConnectCommand();
     DefineVarCommand* defineVarCommand = new DefineVarCommand();
@@ -54,12 +56,6 @@ void Parser::createmap() {
     commands.insert({"Sleep", sleepCommand});
     commands.insert({"while",whileCommand});
     commands.insert({"if", ifCommand});
-	/*commands["connectControlClient"]=connectCommand;
-	commands["var"]=defineVarCommand;
-	commands["Print"] =printCommand ;
-	commands["Sleep"] =sleepCommand;
-	commands["while"]=whileCommand ;
-	commands["if"]=ifCommand ;*/
 
 }
 

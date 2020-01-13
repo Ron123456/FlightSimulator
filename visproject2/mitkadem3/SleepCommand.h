@@ -10,6 +10,7 @@
 #include "ConditionParser.h"
 class SleepCommand : public Command{
 public:
+    //what the function basically do
 	int execute(Compiler* cp) override;
 
 };

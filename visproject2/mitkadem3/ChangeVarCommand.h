@@ -9,6 +9,7 @@
 #include "ConditionParser.h"
 class ChangeVarCommand : public Command{
 public:
+    //what the command basically does
 	int execute(Compiler* cp) override;
 };
 

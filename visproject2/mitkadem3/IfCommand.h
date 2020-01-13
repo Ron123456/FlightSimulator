@@ -10,6 +10,7 @@
 
 class IfCommand : public Command {
 public:
+    //what the function basically does
     int execute(Compiler* cp) override;
 };
 

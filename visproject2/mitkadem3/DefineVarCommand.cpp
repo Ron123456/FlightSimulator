@@ -7,6 +7,7 @@ int DefineVarCommand::execute(Compiler* cp) {
 	string varName = cp->token[cp->index + 1];
 	//get the operator of the definition
 	string op= cp->token[cp->index + 2];
+	// if ->
 	if (op.compare("->") == 0) {
 		//connc=0 means ->
 		string path = cp->token[cp->index + 4];
@@ -15,6 +16,7 @@ int DefineVarCommand::execute(Compiler* cp) {
 		cp->getSymbolTable()->createUpdateVar(varName, path, 0);
 		return 5;
 	}
+	// if <-
 	else if (op.compare("<-") == 0) {
 		//connc=1 means <-
 		string path = cp->token[cp->index + 4];

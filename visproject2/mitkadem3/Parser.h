@@ -25,30 +25,18 @@ class SleepCommand;
 class WhileCommand;
 class IfCommand;
 class ChnageVarCommand;
-//#include "ChangeVarCommand.h"
-//#include "Compiler.h"
 class Compiler;
-class Parser {
-	/*openServerCommand* openServerCommand1 = new openServerCommand();
-	ConnectCommand* connectCommand = new ConnectCommand();
-	DefineVarCommand* defineVarCommand = new DefineVarCommand();
-	PrintCommand* printCommand = new PrintCommand();
-	SleepCommand* sleepCommand = new SleepCommand();
-	WhileCommand* whileCommand = new WhileCommand;
-	IfCommand* ifCommand = new IfCommand();
-	unordered_map<string, Command*> commands = {
-	{ "openDataServer", openServerCommand1 },
-	{ "connectControlClient" , connectCommand },
-	{ "var" ,defineVarCommand }, { "Print",printCommand },
-	{ "Sleep" , sleepCommand }, { "while" , whileCommand },
-	{ "if" , ifCommand } 
-	};*/
-	std::map<std::string, Command*> commands;
-	//map<string,int
-public:
-    void createmap();
-    void parsing(Compiler* cp);
 
+
+class Parser {
+	//map of commands, O(1) for each
+	std::map<std::string, Command*> commands;
+public:
+    //create the map
+    void createmap();
+    //parse the next command
+    void parsing(Compiler* cp);
+    //constractor
     Parser();
 };
 

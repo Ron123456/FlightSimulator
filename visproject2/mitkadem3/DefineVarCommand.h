@@ -8,6 +8,7 @@
 #include "Compiler.h"
 #include "ConditionParser.h"
 class DefineVarCommand : public Command{
+    //what the function basically do
 	int execute(Compiler* cp) override;
 };
 

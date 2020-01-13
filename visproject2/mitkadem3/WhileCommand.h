@@ -8,8 +8,8 @@
 #include "Command.h"
 #include "ConditionParser.h"
 class WhileCommand : public Command {
-
 public:
+    //what the function basically do
     int execute(Compiler* cp) override;
 };
 

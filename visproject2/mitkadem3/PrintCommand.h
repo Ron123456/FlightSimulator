@@ -8,6 +8,7 @@
 #include "Compiler.h"
 class PrintCommand : public Command {
 public:
+    //what the function basically do
 	int execute(Compiler* cp) override;
 };
 

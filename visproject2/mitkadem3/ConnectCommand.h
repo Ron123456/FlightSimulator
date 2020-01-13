@@ -10,6 +10,7 @@
 
 class ConnectCommand : public Command {
 public:
+    //the execute - what the command basically does
 	int execute(Compiler* cp) override;
 };
 
