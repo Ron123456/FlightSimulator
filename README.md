@@ -2,12 +2,13 @@
 
 Flight Simulator is a C++ program that interpeters a file with commands to [FlightGear](https://www.flightgear.org/) program and executing them.  
 This Our project for the second year.  
+Link to Github project: https://github.com/Ron123456/FlightSimulator  
 Creaters : Amit Nir & Ron Sherman
 ## Installation
 
 Clone the files from the project using the webpage or  by typing:     
 ```bash  
- git clone http://https://github.com/Ron123456/FlightSimulator
+ git clone https://github.com/Ron123456/FlightSimulator
 ```  
 compile the files with:
 ```bash  
