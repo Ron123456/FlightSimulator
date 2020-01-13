@@ -6,111 +6,59 @@ std::mutex mutex_lock;
 void SymbolTable::createUpdateVar(string name, string path, bool connc) {
 	//default value of a var is 0
 	Var* v = new Var(path,connc);
+	//insert to the name-var map
 	this->var_names.insert({ name,v });
-	//this->paths.insert({ path,v });
+	//insert to the name-path map
 	this->varsToPaths.insert({name,path});
+	//insert to the path-name map
+	//this will be used when updating vars from the sim
 	this->pathsToVars.insert({path,name});
-	//cout << name << " created in symboltable" << endl;
-	/*cout << "CURRENT VARS------" << endl;
-	for (auto it = var_names.begin(); it != var_names.end(); it++)
-	{
-		std::cout << it->first  // path (key)
-			<< ':'
-			<< std::to_string(it->second->getVal())   // string's value 
-			<< std::endl;
-	}*/
 }
-//create a normal var
+//create a normal var, that doesn't update or get updated
 void SymbolTable::createVar(string name, float val) {
 	//default value of a var is 0
-	//Var* v = new Var(path, connc);
 	Var* v = new Var(val);
+	//insert it only to the first map- it doesn't have a path
 	this->var_names.insert({name,v});
-	//cout << name << " created normal var in symboltable" << endl;
 }
+//change the value of a variable, based on its name
 void SymbolTable::setValueFromName(string name, float val) {
 	if (this->var_names.find(name) != this->var_names.end()) {
+		//we lock the map, as multiple threads can update the table at the same time
 		mutex_lock.lock();
 		this->var_names.find(name)->second->setVal(val);
+		//unlock the mutex
 		mutex_lock.unlock();
-		/*cout << "CURRENT VARS------" << endl;
-		for (auto it = var_names.begin(); it != var_names.end(); it++)
-		{
-			std::cout << it->first  // path (key)
-				<< ':'
-				<< std::to_string(it->second->getVal())   // string's value 
-				<< std::endl;
-		}*/
 	}
-	else {
-		cerr << name << " NOT FOUND" << endl;
-		cout << "CURRENT VARS" << endl;
-		for (auto it = var_names.begin(); it != var_names.end(); it++)
-		{
-			std::cout << it->first  // path (key)
-				<< ':'
-				<< std::to_string(it->second->getVal())   // string's value 
-				<< std::endl;
-		}
-	}
-	//this line requires the default constructor which we don't have5
-	//this->var_names[name].setVal(val);
 }
-//this method will be used only by the openServerCommand
+//this method will be used only by the openServerCommand- setting a var's value based on its path
 void SymbolTable::setValueFromPath(string path, float val) {
+	//lock the map
 	mutex_lock.lock();
 	this->var_names.find(pathsToVars.find(path)->second)->second->setVal(val);
+	//release the map
 	mutex_lock.unlock();
-	/*std::cout << "updating " << path << "with val " << val;
-	for (auto it = paths.begin(); it != paths.end(); it++)
-	{
-		std::cout << it->first  // path (key)
-			<< ':'
-			<< std::to_string(it->second->getVal())   // string's value 
-			<< std::endl;
-	}*/
-	//this line below requires the default constructor which we don't have5
-	//this->paths[path].setVal(val);
 }
+//returns the value of a variable
 float SymbolTable::get(string varname) {
-	if (varname.compare("heading")==0) {
-		/*cout << "CURRENT VARS" << endl;
-		for (auto it = var_names.begin(); it != var_names.end(); it++)
-		{
-			std::cout << it->first  // path (key)
-				<< ':'
-				<< std::to_string(it->second->getVal())   // string's value 
-				<< std::endl;
-		}*/
-	}
 	return this->var_names.find(varname)->second->getVal();
-	//this line below requires the default constructor which we don't have5
-	//return this->var_names[varname].getVal();
 }
+//returns the path of a variable based on its name
 string SymbolTable::getPath(string varname) {
 	//cout << "getting path" << endl;
 	if (this->varsToPaths.find(varname) != this->varsToPaths.end()) {
 		return this->varsToPaths.find(varname)->second;
 	}
-	else {
-		cerr << "NOT FOUND PATH " << varname << endl;
-		/*for (auto it = varsToPaths.begin(); it != varsToPaths.end(); it++)
-		{
-			std::cout << it->first  // path (key)
-				<< "val:"
-				<< (it->second)   // string's value 
-				<< std::endl;
-		}*/
-		return "";
-	}
 }
+//check if 'path' is a path of a variable we need to update from the sim to us
 bool SymbolTable::containsPathToUpdate(string path) {
 	return this->pathsToVars.find(path) != this->pathsToVars.end()
 		&& (this->var_names.find(pathsToVars.find(path)->second)->second->getConnc()==1);
 }
+//deletes a variable- can be used whenever they are defined inside a scope. (didn't use)
 void SymbolTable::deleteVar(string varname) {
 	mutex_lock.lock();
-	//if the var exists
+	//check if if the var exists
 	if (this->var_names.find(varname) != this->var_names.end()) {
 		//free the var
 		delete (this->var_names.find(varname)->second);
@@ -119,11 +67,12 @@ void SymbolTable::deleteVar(string varname) {
 	}
 	else {
 		cout << "error in deleting a var!" << endl;
-		exit(1);
+		//exit(1);
 	}
+	//unlock the mutex
 	mutex_lock.unlock();
 }
-//check to see if the connc type is 0- which means we need to update the sim as well
+//checks if the this var needs to be sent as an update to the simulator
 bool SymbolTable::isUpdateToSim(string varname) {
 	return this->var_names.find(varname) != this->var_names.end() &&
 		(this->var_names.find(varname)->second->getConnc() == 0);

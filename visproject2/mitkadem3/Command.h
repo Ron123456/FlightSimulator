@@ -5,13 +5,13 @@
 /*
 Command Interface
 */
+//forward declaration to prevent circular including
 class Compiler;
 class Command {
 
 public:
-	//the args that execute gets depends on you - I need compiler as arg
+	//the only argument we get is 'Compiler'- it holds everything we need
 	virtual int execute(Compiler* cp) { (void)(cp); return 1; };
-	//virtual ~Command() {};
 };
 #endif
 

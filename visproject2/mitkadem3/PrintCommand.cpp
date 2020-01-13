@@ -12,9 +12,11 @@ int PrintCommand::execute(Compiler* cp) {
     if (s.rfind("\"", 0) == 0) {
         s = s.substr(1, s.length() - 2);
     }
-        //else, it's a var name
+    //else, it's an expression we need to interpet
     else {
-        s = std::to_string(cp->getSymbolTable()->get(s));
+		ConditionParser conParser = ConditionParser();
+		float f = conParser.varsFromExp(s, cp);
+        s = std::to_string(f);
     }
 
     cout << s << endl;

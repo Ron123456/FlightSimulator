@@ -11,23 +11,22 @@
 #include "Connection.h"
 using namespace std;
 /**
- * Compiler Interface
+ * Compiler class- the main class that controls all of the program
  */
 class Compiler {
-	//later for scopes of FUNCTIONS- we'll do a list of symbol table for each scope
+	//a symbol table that handles the compiler's variables
 	SymbolTable* sym;
-	//the thing for parser- that's for you amitush
+	//a mapping between names and commands
 	unordered_map<string, Command> commands;
-
-
-
-	//void parser(vector<string> tokens);
-	//copy constructor of fstream is not allowed so I used by refrence
+	//the lexer method
 	void lexer(fstream& f);
 public:
+	//a class that handles our connection as a client
     Connection connection;
     Parser* parser = new Parser();
+	//the token that lexer returns and we iterate over it
     vector<string> token;
+	//index tells us where are we in the vector
     int index = 0;
 	void read(fstream& f);
 	bool closeConnection=false;

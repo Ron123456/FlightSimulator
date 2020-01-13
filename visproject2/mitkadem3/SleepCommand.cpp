@@ -7,7 +7,7 @@
 //make the thread sleep for X miliseconds
 int SleepCommand::execute(Compiler* cp) {
 	ConditionParser conParser = ConditionParser();
-	//get the int from the tokens to sleep for number of seconds
+	//get the int from the tokens to sleep for number of seconds- it can be an expression
 	int num = conParser.varsFromExp(cp->token[cp->index + 1],cp);
 	//thread sleeps
 	std::this_thread::sleep_for(std::chrono::milliseconds(num));

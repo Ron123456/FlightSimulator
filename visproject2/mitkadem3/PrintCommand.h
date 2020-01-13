@@ -6,6 +6,7 @@
 #define FLIGHTSIMULATOR_PRINTCOMMAND_H
 #include "Command.h"
 #include "Compiler.h"
+#include "ConditionParser.h"
 class PrintCommand : public Command {
 public:
     //what the function basically do

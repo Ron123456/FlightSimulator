@@ -5,21 +5,21 @@
 #include <unordered_map>
 #include <iostream>
 #include <mutex>
+/*
+ class SymbolTable- holds mappings of variables and handles creating and updating them
+*/
 class SymbolTable {
 public:
-//will have 2 maps- one with name to path and another path to name
+	//will have 3 maps- one with name to path,another path to name, and third will hold
+	//the actual name to var
 	//name of var in program as key
 	unordered_map<string,Var*> var_names;
-	//simulation path as key
-	//unordered_map<string, Var*> paths;
 	//path name to var name
 	unordered_map<string, string> pathsToVars;
-	//var name to path name
+	//var name to path name map
 	unordered_map<string, string> varsToPaths;
-//queue of things to execute
-	queue <string> asd;
 
-	//connc =1 means <-, and -> is 0
+	//connc value=1 means <-, and -> is 0,
 	void createUpdateVar(string name, string path, bool connc);
 	void createVar(string name,float val);
 	void setValueFromName(string name,float val);
