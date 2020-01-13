@@ -9,7 +9,11 @@ Clone the files from the project using the webpage or  by typing:
 ```bash  
  git clone http://https://github.com/Ron123456/FlightSimulator
 ```  
-compile the files with g++ and execute the file with the path to the text file to be parsed as an argument:     
+compile the files with:
+```bash  
+ g++ -std=c++14 */*.cpp *.cpp -o a.out -pthread  
+```   
+and execute the file with the path to the text file to be parsed as an argument:     
 ```bash
 ./a.out fly.txt
 ```
