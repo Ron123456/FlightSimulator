@@ -27,11 +27,12 @@ double ConditionParser::varsFromExp(string &exp, Compiler* compiler) {
                     c = exp.at(i);
                 }
             }
+            i--;
             //find variable's value
             float val = compiler->getSymbolTable()->get(var);
             var = to_string(val);
             //if its -- its a + cause we don't know to deal with --.
-            if (var[0] == '-' && newexp[newexp.length() - 1] == '-') {
+            if (var[0] == '-' && newexp.length() - 1 > 0 && newexp[newexp.length() - 1] == '-') {
                 newexp = newexp.substr(0, newexp.length() - 1);
             }
             //append the value
