@@ -6,7 +6,7 @@
 	parser1 = new Parser();
 }*/
 //the main method of compiler
-void Compiler::read(fstream& f) {
+void Compiler::read(ifstream& f) {
 
 	//run the lexer, updates the 'token' field of compiler
     lexer(f);
@@ -53,7 +53,7 @@ bool isCommandWithArgs(string s) {
 }
 
 //breaks down the stream to tokens.
-void Compiler::lexer(fstream& f) {
+void Compiler::lexer(ifstream& f) {
     string line;
     // Declaring Vector of String type
     vector<string> tokens;
@@ -61,6 +61,18 @@ void Compiler::lexer(fstream& f) {
 	//go over the lines in the file
     while (!f.eof()) {
         std::getline(f, line);
+		//check if it's an empty line
+		if (line.size() == 0) {
+			//cout << "got it"<<endl;
+			std::getline(f, line);
+			continue;
+		}
+			
+		//between windows and unix
+		if (line[line.size() - 1] == '\r') {
+			//cout << "removed r " << lineno<<endl;
+			line = line.substr(0, line.size() - 1);
+		}
         lineno++;
         //erase ALL tabs first of all
         line.erase(remove(line.begin(), line.end(), '\t'), line.end());

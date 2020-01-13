@@ -19,7 +19,7 @@ class Compiler {
 	//a mapping between names and commands
 	unordered_map<string, Command> commands;
 	//the lexer method
-	void lexer(fstream& f);
+	void lexer(ifstream& f);
 public:
 	//a class that handles our connection as a client
     Connection connection;
@@ -28,7 +28,7 @@ public:
     vector<string> token;
 	//index tells us where are we in the vector
     int index = 0;
-	void read(fstream& f);
+	void read(ifstream& f);
 	bool closeConnection=false;
     Compiler();
 
