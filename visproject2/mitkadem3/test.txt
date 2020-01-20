@@ -23,16 +23,7 @@ var alt <- sim("/instrumentation/altimeter/indicated-altitude-ft")
 var rpm <- sim("/engines/engine/rpm")
 Print("waiting 2 minutes for gui")
 Sleep(1000)
-Print("let's start")
-if 200 <= 750 {
-	Print("inside first if")
+if rpm + alt + 750 < 750 {
+    Print("try")
 }
-if 200 > 750 {
-    Print("inside second if")
-}
-Sleep(5000)
-Print("let's fly")
-while 200 < 1000 {
-	Print("infinite loop")
-}
-Print("done")
+Print("past if")
