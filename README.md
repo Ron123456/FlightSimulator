@@ -10,7 +10,7 @@ Clone the files from the project using the webpage or  by typing:
 ```bash  
  git clone https://github.com/Ron123456/FlightSimulator
 ```  
-compile the files with:
+compile the files in visproject2/mitkadem3 with:
 ```bash  
  g++ -std=c++14 */*.cpp *.cpp -o a.out -pthread  
 ```   
