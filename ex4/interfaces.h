@@ -5,12 +5,10 @@
 #ifndef EX4_INTERFACES_H
 #define EX4_INTERFACES_H
 
-#include <streambuf>
-
 namespace client_handler {
     class ClientHandler {
     public:
-        virtual int handleClient(std::streambuf input, std::streambuf output) = 0;
+        virtual int handleClient(int socket) = 0;
     };
 }
 
@@ -18,22 +16,18 @@ namespace server_side {
     class Server {
         int port;
     public:
-        virtual int open(int port, client_handler::ClientHandler c) = 0;
+        virtual int open(int port, client_handler::ClientHandler* c) = 0;
         virtual int close() = 0;
     };
 }
 
 namespace problem_solving {
-    class Problem {
-
-    };
-    class Solution {
-
-    };
-    class Solver {
+    template <typename Problem, typename Solution> 
+	class Solver{
     public:
         virtual Solution solve(Problem p) = 0;
     };
+	template <typename Problem, typename Solution>
     class CacheManager {
     public:
         virtual bool hasSolution(Solution s) = 0;

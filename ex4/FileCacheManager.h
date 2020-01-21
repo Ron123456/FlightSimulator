@@ -6,15 +6,17 @@
 #define EX4_FILECACHEMANAGER_H
 
 #include "interfaces.h"
+#include <string>
 using namespace problem_solving;
 
-class FileCacheManager : public CacheManager {
+template<typename Solution>
+class FileCacheManager : public CacheManager<std::string,typename Solution> {
 public:
-    bool hasSolution(Solution s) override;
+    bool hasSolution(std::string s) override;
 
-    Solution getSolution(Problem p) override;
+	Solution getSolution(std::string p) override;
 
-    int setSolution(Problem p, Solution s) override;
+    int setSolution(std::string p, Solution sol ) override;
 };
 
 

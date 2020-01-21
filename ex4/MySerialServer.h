@@ -8,9 +8,10 @@
 #include "interfaces.h"
 using namespace server_side;
 class MySerialServer : public Server {
+	bool openedConn=false;
 public:
-    int open(int port) override;
-
+    int open(int port, client_handler::ClientHandler* c) override;
+	void startClients(int port, client_handler::ClientHandler* c);
     int close() override;
 
 };

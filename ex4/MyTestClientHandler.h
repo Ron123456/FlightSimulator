@@ -6,10 +6,16 @@
 #define EX4_MYTESTCLIENTHANDLER_H
 
 
-#include "ClientHandler.h"
-
-class MyTestClientHandler : public ClientHandler {
-
+#include "interfaces.h"
+#include <string>
+#include "FileCacheManager.h"
+class MyTestClientHandler : public client_handler::ClientHandler {
+	problem_solving::Solver < std::string, std::string> *s;
+	FileCacheManager<std::string>* cm;
+public:
+	MyTestClientHandler(problem_solving::Solver<std::string, std::string>* solver,
+		FileCacheManager<std::string>* cache) : s(solver), cm(cache) {};
+	int handleClient(int socket) override;
 };
 
 
