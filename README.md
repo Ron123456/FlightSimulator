@@ -1,6 +1,6 @@
-# FlightSimulator
+# FlightSimulator Interpreter
 
-Flight Simulator is a C++ program that interpeters a file with commands to [FlightGear](https://www.flightgear.org/) program and executing them.  
+Flight Simulator Interpreter is a C++ program that interpeters a file with commands to [FlightGear](https://www.flightgear.org/) program and executing them.  
 This is our project for the second year of university.  
 Link to Github project: https://github.com/Ron123456/FlightSimulator  
 Creaters : Amit Nir & Ron Sherman
