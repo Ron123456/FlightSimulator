@@ -1,4 +1,4 @@
-# FlightSimulator Interpreter
+# Advanced Programming Assigment 1- FlightSimulator Interpreter
 
 Flight Simulator Interpreter is a C++ program that interpeters a file with commands to [FlightGear](https://www.flightgear.org/) program and executing them.  
 This is our project for the second year of university.  
